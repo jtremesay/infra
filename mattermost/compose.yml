@@ -1,16 +1,16 @@
 services:
   postgres17:
-    image: postgres:17
+    image: "postgres:17"
     volumes:
-      - pg17_data:/var/lib/postgresql/data
+      - "pg17_data:/var/lib/postgresql/data"
 
     networks:
-      - default
+      - "default"
 
     environment:
-      - POSTGRES_DB=mattermost
-      - POSTGRES_USER=mattermost
-      - POSTGRES_PASSWORD=mattermost 
+      - "POSTGRES_DB=mattermost"
+      - "POSTGRES_USER=mattermost"
+      - "POSTGRES_PASSWORD=mattermost"
 
   mattermost:
     image: mattermost/mattermost-team-edition:10.7
@@ -26,26 +26,26 @@ services:
       - "MM_SERVICESETTINGS_SITEURL=https://mattermost.jtremesay.org"
 
     tmpfs:
-      - /tmp
+      - "/tmp"
 
     volumes:
-      - MATTERMOST_CONFIG_PATH:/mattermost/config:rw
-      - MATTERMOST_DATA_PATH:/mattermost/data:rw
-      - MATTERMOST_LOGS_PATH:/mattermost/logs:rw
-      - MATTERMOST_PLUGINS_PATH:/mattermost/plugins:rw
-      - MATTERMOST_CLIENT_PLUGINS_PATH:/mattermost/client/plugins:rw
-      - MATTERMOST_BLEVE_INDEXES_PATH:/mattermost/bleve-indexes:rw
+      - "MATTERMOST_CONFIG_PATH:/mattermost/config:rw"
+      - "MATTERMOST_DATA_PATH:/mattermost/data:rw"
+      - "MATTERMOST_LOGS_PATH:/mattermost/logs:rw"
+      - "MATTERMOST_PLUGINS_PATH:/mattermost/plugins:rw"
+      - "MATTERMOST_CLIENT_PLUGINS_PATH:/mattermost/client/plugins:rw"
+      - "MATTERMOST_BLEVE_INDEXES_PATH:/mattermost/bleve-indexes:rw"
 
     networks:
-      - default
-      - traefik_public
+      - "default"
+      - "traefik_public"
 
     deploy:
       labels:
-        - traefik.enable=true
-        - traefik.http.routers.mattermost.rule=Host(`mattermost.jtremesay.org`) || Host(`mattermost.slaanesh.org`)
-        - traefik.http.services.mattermost.loadbalancer.server.port=8065
-        - traefik.http.routers.mattermost.tls.certresolver=leresolver
+        - "traefik.enable=true"
+        - "traefik.http.routers.mattermost.rule=Host(`mattermost.jtremesay.org`) || Host(`mattermost.slaanesh.org`)"
+        - "traefik.http.services.mattermost.loadbalancer.server.port=8065"
+        - "traefik.http.routers.mattermost.tls.certresolver=leresolver"
 
 
 networks:

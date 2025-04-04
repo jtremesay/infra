@@ -36,23 +36,23 @@ services:
       - "443:443"
 
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik_data:/data
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik_data:/data"
 
     networks:
-      - traefik_public
+      - "traefik_public"
 
     deploy:
       labels:
-        - traefik.enable=true
-        - traefik.http.routers.traefik_dashboard.rule=Host(`traefik.jtremesay.org`)
-        - traefik.http.routers.traefik_dashboard.service=api@internal
-        - traefik.http.routers.traefik_dashboard.tls.certresolver=leresolver
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.jtremesay.org`)"
+        - "traefik.http.routers.traefik_dashboard.service=api@internal"
+        - "traefik.http.routers.traefik_dashboard.tls.certresolver=leresolver"
         - "traefik.http.services.traefik_dashboard.loadbalancer.server.port=443"
 
       placement:
         constraints:
-          - node.role == manager
+          - "node.role == manager"
 
 networks:
   traefik_public:
