@@ -1,0 +1,20 @@
+services:
+  rssbridge:
+    image: "rssbridge/rss-bridge"
+    volumes:
+      - "config:/config"
+    networks:
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.rssbridge.rule=Host(`rssbridge.jtremesay.org`) || Host(`rssbridge.slaanesh.org`)"
+        - "traefik.http.routers.rssbridge.tls.certresolver=leresolver"
+        - "traefik.http.services.rssbridge.loadbalancer.server.port=80"
+
+volumes:
+  config:
+ 
+networks:
+  traefik_public:
+    external: true

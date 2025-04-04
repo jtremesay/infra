@@ -11,12 +11,14 @@ all: deploy
 deploy: \
     deploy-mattermost \
 	deploy-nextcloud \
+	deploy-rssbridge \
 	deploy-traefik
 
 .PHONY: undeploy
 undeploy: \
 	undeploy-mattermost \
 	undeploy-nextcloud \
+	undeploy-rssbridge \
 	undeploy-traefik
 
 .PHONY: context
@@ -48,6 +50,20 @@ deploy-nextcloud:
 .PHONY: undeploy-nextcloud
 undeploy-nextcloud:
 	$(MAKE) -C nextcloud undeploy
+
+
+#########################################################################################
+# RSSBridge
+#########################################################################################
+
+.PHONY: deploy-rssbridge
+deploy-rssbridge:
+	$(MAKE) -C rssbridge deploy
+
+.PHONY: undeploy-rssbridge
+undeploy-rssbridge:
+	$(MAKE) -C rssbridge undeploy
+
 
 
 #########################################################################################
