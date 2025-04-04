@@ -10,6 +10,7 @@ all: deploy
 .PHONY: deploy
 deploy: \
     deploy-mattermost \
+	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-rssbridge \
 	deploy-traefik
@@ -17,6 +18,7 @@ deploy: \
 .PHONY: undeploy
 undeploy: \
 	undeploy-mattermost \
+	undeploy-mirrors \
 	undeploy-nextcloud \
 	undeploy-rssbridge \
 	undeploy-traefik
@@ -37,6 +39,19 @@ deploy-mattermost:
 .PHONY: undeploy-mattermost
 undeploy-mattermost:
 	$(MAKE) -C mattermost undeploy
+
+
+#########################################################################################
+# Mirrors
+#########################################################################################
+
+.PHONY: deploy-mirrors
+deploy-mirrors:
+	$(MAKE) -C mirrors deploy
+
+.PHONY: undeploy-mirrors
+undeploy-mirrors:
+	$(MAKE) -C mirrors undeploy
 
 
 #########################################################################################
