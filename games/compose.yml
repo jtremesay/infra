@@ -1,0 +1,18 @@
+services:
+  nginx:
+    image: "nginx"
+    volumes:
+      - "/etc/dockerized/games/nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "/srv/games:/usr/share/nginx/html"
+    networks:
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.games.rule=Host(`games.jtremesay.org`) || Host(`games.slaanesh.org`)"
+        - "traefik.http.routers.games.tls.certresolver=leresolver"
+        - "traefik.http.services.games.loadbalancer.server.port=80"
+
+networks:
+  traefik_public:
+    external: true

@@ -10,6 +10,7 @@ all: deploy
 .PHONY: deploy
 deploy: \
 	deploy-freshrss \
+	deploy-games \
     deploy-mattermost \
 	deploy-mirrors \
 	deploy-nextcloud \
@@ -19,6 +20,7 @@ deploy: \
 .PHONY: undeploy
 undeploy: \
 	undeploy-freshrss \
+	undeploy-games \
 	undeploy-mattermost \
 	undeploy-mirrors \
 	undeploy-nextcloud \
@@ -41,6 +43,19 @@ deploy-freshrss:
 .PHONY: undeploy-freshrss
 undeploy-freshrss:
 	$(MAKE) -C freshrss undeploy
+
+
+#########################################################################################
+# Games
+#########################################################################################
+
+.PHONY: deploy-games
+deploy-games:
+	$(MAKE) -C games deploy
+
+.PHONY: undeploy-games
+undeploy-games:
+	$(MAKE) -C games undeploy
 
 
 #########################################################################################
