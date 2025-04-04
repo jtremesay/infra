@@ -1,0 +1,38 @@
+services:
+  postgres17:
+    image: "postgres:17"
+    volumes:
+      - "pg17_data:/var/lib/postgresql/data"
+    networks:
+      - "default"
+    environment:
+      - "POSTGRES_DB=freshrss"
+      - "POSTGRES_USER=freshrss"
+      - "POSTGRES_PASSWORD=freshrss"
+
+  freshrss:
+    image: "freshrss/freshrss"
+    environment:
+      - "TZ=Europe/Paris"
+      - "CRON_MIN=*"
+    networks:
+      - "default"
+      - "traefik_public"
+    volumes:
+      - "data:/var/www/FreshRSS/data"
+      - "extensions:/var/www/FreshRSS/extensions"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.freshrss.rule=Host(`rss.jtremesay.org`) || Host(`rss.slaanesh.org`)"
+      - "traefik.http.routers.freshrss.tls.certresolver=leresolver"
+      - "traefik.http.services.freshrss.loadbalancer.server.port=80"
+
+networks:
+  default:
+  traefik_public:
+    external: true
+
+volumes:
+  pg17_data:
+  data:
+  extensions:

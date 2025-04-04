@@ -9,6 +9,7 @@ all: deploy
 
 .PHONY: deploy
 deploy: \
+	deploy-freshrss \
     deploy-mattermost \
 	deploy-mirrors \
 	deploy-nextcloud \
@@ -17,6 +18,7 @@ deploy: \
 
 .PHONY: undeploy
 undeploy: \
+	undeploy-freshrss \
 	undeploy-mattermost \
 	undeploy-mirrors \
 	undeploy-nextcloud \
@@ -26,6 +28,19 @@ undeploy: \
 .PHONY: context
 context:
 	docker context create --docker "host=ssh://${DOCKER_CONTEXT}.jtremesay.org" ${DOCKER_CONTEXT}
+
+
+#########################################################################################
+# FreshRSS
+#########################################################################################
+
+.PHONY: deploy-freshrss
+deploy-freshrss:
+	$(MAKE) -C freshrss deploy
+
+.PHONY: undeploy-freshrss
+undeploy-freshrss:
+	$(MAKE) -C freshrss undeploy
 
 
 #########################################################################################
