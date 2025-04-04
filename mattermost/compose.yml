@@ -1,0 +1,63 @@
+services:
+  postgres17:
+    image: postgres:17
+    volumes:
+      - pg17_data:/var/lib/postgresql/data
+
+    networks:
+      - default
+
+    environment:
+      - POSTGRES_DB=mattermost
+      - POSTGRES_USER=mattermost
+      - POSTGRES_PASSWORD=mattermost 
+
+  mattermost:
+    image: mattermost/mattermost-team-edition:10.7
+    environment:
+      # necessary Mattermost options/variables (see env.example)
+      - "MM_SQLSETTINGS_DRIVERNAME=postgres"
+      - "MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:mattermost@postgres17:5432/mattermost?sslmode=disable&connect_timeout=10"
+
+      # necessary for bleve
+      - "MM_BLEVESETTINGS_INDEXDIR=/mattermost/bleve-indexes"
+
+      # additional settings
+      - "MM_SERVICESETTINGS_SITEURL=https://mattermost.jtremesay.org"
+
+    tmpfs:
+      - /tmp
+
+    volumes:
+      - MATTERMOST_CONFIG_PATH:/mattermost/config:rw
+      - MATTERMOST_DATA_PATH:/mattermost/data:rw
+      - MATTERMOST_LOGS_PATH:/mattermost/logs:rw
+      - MATTERMOST_PLUGINS_PATH:/mattermost/plugins:rw
+      - MATTERMOST_CLIENT_PLUGINS_PATH:/mattermost/client/plugins:rw
+      - MATTERMOST_BLEVE_INDEXES_PATH:/mattermost/bleve-indexes:rw
+
+    networks:
+      - default
+      - traefik_public
+
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.mattermost.rule=Host(`mattermost.jtremesay.org`) || Host(`mattermost.slaanesh.org`)
+        - traefik.http.services.mattermost.loadbalancer.server.port=8065
+        - traefik.http.routers.mattermost.tls.certresolver=leresolver
+
+
+networks:
+  default:
+  traefik_public:
+    external: true
+
+volumes:
+  pg17_data:
+  MATTERMOST_CONFIG_PATH:
+  MATTERMOST_DATA_PATH:
+  MATTERMOST_LOGS_PATH:
+  MATTERMOST_PLUGINS_PATH:
+  MATTERMOST_CLIENT_PLUGINS_PATH:
+  MATTERMOST_BLEVE_INDEXES_PATH:

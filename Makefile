@@ -8,14 +8,31 @@ all: deploy
 ########################################################################################
 
 .PHONY: deploy
-deploy: deploy-traefik
+deploy: \
+    deploy-mattermost \
+	deploy-traefik
 
 .PHONY: undeploy
-undeploy: undeploy-traefik
+undeploy: \
+	undeploy-mattermost \
+	undeploy-traefik
 
 .PHONY: context
 context:
 	docker context create --docker "host=ssh://${DOCKER_CONTEXT}.jtremesay.org" ${DOCKER_CONTEXT}
+
+
+#########################################################################################
+# Mattermost
+#########################################################################################
+
+.PHONY: deploy-mattermost
+deploy-mattermost:
+	$(MAKE) -C mattermost deploy
+
+.PHONY: undeploy-mattermost
+undeploy-mattermost:
+	$(MAKE) -C mattermost undeploy
 
 
 #########################################################################################
