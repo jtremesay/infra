@@ -10,11 +10,13 @@ all: deploy
 .PHONY: deploy
 deploy: \
     deploy-mattermost \
+	deploy-nextcloud \
 	deploy-traefik
 
 .PHONY: undeploy
 undeploy: \
 	undeploy-mattermost \
+	undeploy-nextcloud \
 	undeploy-traefik
 
 .PHONY: context
@@ -33,6 +35,19 @@ deploy-mattermost:
 .PHONY: undeploy-mattermost
 undeploy-mattermost:
 	$(MAKE) -C mattermost undeploy
+
+
+#########################################################################################
+# Nextcloud
+#########################################################################################
+
+.PHONY: deploy-nextcloud
+deploy-nextcloud:
+	$(MAKE) -C nextcloud deploy
+
+.PHONY: undeploy-nextcloud
+undeploy-nextcloud:
+	$(MAKE) -C nextcloud undeploy
 
 
 #########################################################################################
