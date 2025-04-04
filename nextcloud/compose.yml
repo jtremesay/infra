@@ -28,8 +28,6 @@ services:
     image: "nextcloud:31.0"
     volumes:
       - "nextcloud:/var/www/html"
-    expose:
-      - "80"
     networks:
       - "default"
       - "traefik_public"
