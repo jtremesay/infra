@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+  app:
+    image: "swarmpit/swarmpit:latest"
+    environment:
+      - "SWARMPIT_DB=http://db:5984"
+      - "SWARMPIT_INFLUXDB=http://influxdb:8086"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+    networks:
+      - "default"
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.swarmpit.rule=Host(`swarmpit.jtremesay.org`) || Host(`swarmpit.slaanesh.org`)"
+        - "traefik.http.routers.swarmpit.tls.certresolver=leresolver"
+        - "traefik.http.services.swarmpit.loadbalancer.server.port=8080"
+      placement:
+        constraints:
+          - "node.role == manager"
+
+  db:
+    image: "couchdb:2.3.0"
+    volumes:
+      - "db-data:/opt/couchdb/data"
+    networks:
+      - "default"
+
+  influxdb:
+    image: "influxdb:1.8"
+    volumes:
+      - "influx-data:/var/lib/influxdb"
+    networks:
+      - "default"
+
+  agent:
+    image: "swarmpit/agent:latest"
+    environment:
+      - "DOCKER_API_VERSION=1.35"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - "default"
+
+networks:
+  default:
+  traefik_public:
+    external: true
+
+
+volumes:
+  db-data:
+  influx-data:

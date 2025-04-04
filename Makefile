@@ -110,6 +110,18 @@ undeploy-rssbridge:
 	$(MAKE) -C rssbridge undeploy
 
 
+#########################################################################################
+# SwarmPit
+#########################################################################################
+
+.PHONY: deploy-swarmpit
+deploy-swarmpit:
+	$(MAKE) -C swarmpit deploy
+
+.PHONY: undeploy-swarmpit
+undeploy-swarmpit:
+	$(MAKE) -C swarmpit undeploy
+
 
 #########################################################################################
 # Traefik
