@@ -1,0 +1,63 @@
+services:
+  traefik:
+    image: "traefik:3"
+    command:
+      # Logging
+      - "--log.level=INFO"
+
+      # Entry point http
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+
+      # Entry point https
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.asDefault=true"
+
+      # Enable dashboard
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+
+      # Enable Swarm provider
+      - "--providers.swarm=true"
+      - "--providers.swarm.exposedByDefault=false"
+      - "--providers.swarm.network=traefik_public"
+
+      # Let's encrypt
+      - "--certificatesresolvers.leresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.leresolver.acme.email=jonathan.tremesaygues@slaanesh.org"
+      - "--certificatesresolvers.leresolver.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web"
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_data:/data
+
+    networks:
+      - traefik_public
+
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.traefik_dashboard.rule=Host(`traefik.jtremesay.org`)
+        - traefik.http.routers.traefik_dashboard.service=api@internal
+        - traefik.http.routers.traefik_dashboard.tls.certresolver=leresolver
+        - "traefik.http.services.traefik_dashboard.loadbalancer.server.port=443"
+
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  traefik_public:
+    attachable: true
+    external: true
+
+volumes:
+  traefik_data:
