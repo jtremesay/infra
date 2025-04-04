@@ -15,7 +15,9 @@ deploy: \
 	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-rssbridge \
-	deploy-traefik
+	deploy-swarmpit \
+	deploy-traefik \
+	deploy-vaultwarden
 
 .PHONY: undeploy
 undeploy: \
@@ -25,7 +27,9 @@ undeploy: \
 	undeploy-mirrors \
 	undeploy-nextcloud \
 	undeploy-rssbridge \
-	undeploy-traefik
+	undeploy-swarmpit \
+	undeploy-traefik \
+	undeploy-vaultwarden
 
 .PHONY: context
 context:
@@ -135,3 +139,16 @@ deploy-traefik:
 undeploy-traefik:
 	$(MAKE) -C traefik undeploy
 
+
+
+#########################################################################################
+# VaultWarden
+#########################################################################################
+
+.PHONY: deploy-vaultwarden
+deploy-vaultwarden:
+	$(MAKE) -C vaultwarden deploy
+
+.PHONY: undeploy-vaultwarden
+undeploy-vaultwarden:
+	$(MAKE) -C vaultwarden undeploy

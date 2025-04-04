@@ -1,0 +1,26 @@
+services:
+  vault:
+    image: "vaultwarden/server:latest"
+    environment:
+      - EXPERIMENTAL_CLIENT_FEATURE_FLAGS=ssh-key-vault-item,ssh-agent
+      # https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page#secure-the-admin_token
+      # echo -n "MySecretPassword" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4 | sed 's#\$#\$\$#g'
+      #- ADMIN_TOKEN=
+    volumes:
+      - "vault_data:/data"
+    networks:
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.vaultwarden.rule=Host(`vault.jtremesay.org`) || Host(`vault.slaanesh.org`)"
+        - "traefik.http.routers.vaultwarden.tls.certresolver=leresolver"
+        - "traefik.http.services.vaultwarden.loadbalancer.server.port=80"
+
+networks:
+  traefik_public:
+    external: true
+
+
+volumes:
+  vault_data:
