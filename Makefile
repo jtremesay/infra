@@ -35,6 +35,10 @@ undeploy: \
 context:
 	docker context create --docker "host=ssh://${DOCKER_CONTEXT}.jtremesay.org" ${DOCKER_CONTEXT}
 
+.PHONY: prune
+prune:
+	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker system prune --all
+
 
 #########################################################################################
 # FreshRSS
@@ -60,6 +64,19 @@ deploy-games:
 .PHONY: undeploy-games
 undeploy-games:
 	$(MAKE) -C games undeploy
+
+
+#########################################################################################
+# Mail
+#########################################################################################
+
+.PHONY: deploy-mail
+deploy-mail:
+	$(MAKE) -C mail deploy
+
+.PHONY: undeploy-mail
+undeploy-mail:
+	$(MAKE) -C mail undeploy
 
 
 #########################################################################################
