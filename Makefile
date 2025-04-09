@@ -2,21 +2,25 @@ include config.mk
 
 all: deploy
 
+.PHONY: context
+context:
+	docker context create --docker "host=ssh://${DOCKER_CONTEXT}.jtremesay.org" ${DOCKER_CONTEXT}
 
-########################################################################################
-# Generic
-########################################################################################
+
+#########################################################################################
+# Services generic
+#########################################################################################
 
 .PHONY: deploy
 deploy: \
 	deploy-freshrss \
 	deploy-games \
-    deploy-mattermost \
+	deploy-mattermost \
 	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-rssbridge \
 	deploy-swarmpit \
-	deploy-traefik \
+	deploy-traefikk \
 	deploy-vaultwarden
 
 .PHONY: undeploy
@@ -28,20 +32,12 @@ undeploy: \
 	undeploy-nextcloud \
 	undeploy-rssbridge \
 	undeploy-swarmpit \
-	undeploy-traefik \
+	undeploy-traefikk \
 	undeploy-vaultwarden
-
-.PHONY: context
-context:
-	docker context create --docker "host=ssh://${DOCKER_CONTEXT}.jtremesay.org" ${DOCKER_CONTEXT}
-
-.PHONY: prune
-prune:
-	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker system prune --all
 
 
 #########################################################################################
-# FreshRSS
+# freshrss
 #########################################################################################
 
 .PHONY: deploy-freshrss
@@ -54,7 +50,7 @@ undeploy-freshrss:
 
 
 #########################################################################################
-# Games
+# games
 #########################################################################################
 
 .PHONY: deploy-games
@@ -67,20 +63,7 @@ undeploy-games:
 
 
 #########################################################################################
-# Mail
-#########################################################################################
-
-.PHONY: deploy-mail
-deploy-mail:
-	$(MAKE) -C mail deploy
-
-.PHONY: undeploy-mail
-undeploy-mail:
-	$(MAKE) -C mail undeploy
-
-
-#########################################################################################
-# Mattermost
+# mattermost
 #########################################################################################
 
 .PHONY: deploy-mattermost
@@ -93,7 +76,7 @@ undeploy-mattermost:
 
 
 #########################################################################################
-# Mirrors
+# mirrors
 #########################################################################################
 
 .PHONY: deploy-mirrors
@@ -106,7 +89,7 @@ undeploy-mirrors:
 
 
 #########################################################################################
-# Nextcloud
+# nextcloud
 #########################################################################################
 
 .PHONY: deploy-nextcloud
@@ -119,7 +102,7 @@ undeploy-nextcloud:
 
 
 #########################################################################################
-# RSSBridge
+# rssbridge
 #########################################################################################
 
 .PHONY: deploy-rssbridge
@@ -132,7 +115,7 @@ undeploy-rssbridge:
 
 
 #########################################################################################
-# SwarmPit
+# swarmpit
 #########################################################################################
 
 .PHONY: deploy-swarmpit
@@ -145,21 +128,20 @@ undeploy-swarmpit:
 
 
 #########################################################################################
-# Traefik
+# traefikk
 #########################################################################################
 
-.PHONY: deploy-traefik
-deploy-traefik:
-	$(MAKE) -C traefik deploy
+.PHONY: deploy-traefikk
+deploy-traefikk:
+	$(MAKE) -C traefikk deploy
 
-.PHONY: undeploy-traefik
-undeploy-traefik:
-	$(MAKE) -C traefik undeploy
-
+.PHONY: undeploy-traefikk
+undeploy-traefikk:
+	$(MAKE) -C traefikk undeploy
 
 
 #########################################################################################
-# VaultWarden
+# vaultwarden
 #########################################################################################
 
 .PHONY: deploy-vaultwarden
@@ -169,3 +151,4 @@ deploy-vaultwarden:
 .PHONY: undeploy-vaultwarden
 undeploy-vaultwarden:
 	$(MAKE) -C vaultwarden undeploy
+
