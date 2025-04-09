@@ -11,6 +11,6 @@ all: deploy
 deploy:
 	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker stack deploy --detach=true --compose-file compose.yml --prune ${STACK_NAME}
 
-.PHONY: deploy
+.PHONY: undeploy
 undeploy:
 	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker stack rm ${STACK_NAME}
