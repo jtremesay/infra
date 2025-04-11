@@ -13,7 +13,7 @@ services = {
     "nextcloud": True,
     "rssbridge": True,
     "swarmpit": True,
-    "traefikk": True,
+    "traefik": True,
     "vaultwarden": True,
 }
 

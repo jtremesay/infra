@@ -20,7 +20,7 @@ deploy: \
 	deploy-nextcloud \
 	deploy-rssbridge \
 	deploy-swarmpit \
-	deploy-traefikk \
+	deploy-traefik \
 	deploy-vaultwarden
 
 .PHONY: undeploy
@@ -32,7 +32,7 @@ undeploy: \
 	undeploy-nextcloud \
 	undeploy-rssbridge \
 	undeploy-swarmpit \
-	undeploy-traefikk \
+	undeploy-traefik \
 	undeploy-vaultwarden
 
 
@@ -128,16 +128,16 @@ undeploy-swarmpit:
 
 
 #########################################################################################
-# traefikk
+# traefik
 #########################################################################################
 
-.PHONY: deploy-traefikk
-deploy-traefikk:
-	$(MAKE) -C traefikk deploy
+.PHONY: deploy-traefik
+deploy-traefik:
+	$(MAKE) -C traefik deploy
 
-.PHONY: undeploy-traefikk
-undeploy-traefikk:
-	$(MAKE) -C traefikk undeploy
+.PHONY: undeploy-traefik
+undeploy-traefik:
+	$(MAKE) -C traefik undeploy
 
 
 #########################################################################################
