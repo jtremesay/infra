@@ -11,6 +11,7 @@ services = {
     "mattermost": True,
     "mirrors": True,
     "nextcloud": True,
+    "openwebui": True,
     "rssbridge": True,
     "swarmpit": True,
     "traefik": True,

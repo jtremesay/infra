@@ -18,6 +18,7 @@ deploy: \
 	deploy-mattermost \
 	deploy-mirrors \
 	deploy-nextcloud \
+	deploy-openwebui \
 	deploy-rssbridge \
 	deploy-swarmpit \
 	deploy-traefik \
@@ -30,6 +31,7 @@ undeploy: \
 	undeploy-mattermost \
 	undeploy-mirrors \
 	undeploy-nextcloud \
+	undeploy-openwebui \
 	undeploy-rssbridge \
 	undeploy-swarmpit \
 	undeploy-traefik \
@@ -99,6 +101,19 @@ deploy-nextcloud:
 .PHONY: undeploy-nextcloud
 undeploy-nextcloud:
 	$(MAKE) -C nextcloud undeploy
+
+
+#########################################################################################
+# openwebui
+#########################################################################################
+
+.PHONY: deploy-openwebui
+deploy-openwebui:
+	$(MAKE) -C openwebui deploy
+
+.PHONY: undeploy-openwebui
+undeploy-openwebui:
+	$(MAKE) -C openwebui undeploy
 
 
 #########################################################################################
