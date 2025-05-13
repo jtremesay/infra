@@ -1,0 +1,44 @@
+services:
+  prometheus:
+    image: "prom/prometheus"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-otlp-receiver"
+    networks:
+      - "otel"
+      - "otel_public"
+      #- "traefik_public"
+    volumes:
+      - "prometheus_data:/prometheus"
+    # deploy:
+    #   labels:
+    #     - "traefik.enable=true"
+    #     - "traefik.http.routers.otel_prometheus.rule=Host(`prometheus.jtremesay.org`) || Host(`prometheus.slaanesh.org`)"
+    #     - "traefik.http.routers.otel_prometheus.tls.certresolver=leresolver"
+    #     - "traefik.http.services.otel_prometheus.loadbalancer.server.port=9090"
+
+  grafana:
+    image: "grafana/grafana"
+    volumes:
+      - "grafana_data:/var/lib/grafana"
+    networks:
+      - "otel"
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.otel_grafana.rule=Host(`grafana.jtremesay.org`) || Host(`grafana.slaanesh.org`)"
+        - "traefik.http.routers.otel_grafana.tls.certresolver=leresolver"
+        - "traefik.http.services.otel_grafana.loadbalancer.server.port=3000"
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  otel:
+  otel_public:
+    external: true
+  traefik_public:
+    external: true

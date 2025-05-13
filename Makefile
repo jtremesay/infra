@@ -19,6 +19,7 @@ deploy: \
 	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-openwebui \
+	deploy-otel \
 	deploy-portainer \
 	deploy-rssbridge \
 	deploy-swarmpit \
@@ -33,6 +34,7 @@ undeploy: \
 	undeploy-mirrors \
 	undeploy-nextcloud \
 	undeploy-openwebui \
+	undeploy-otel \
 	undeploy-portainer \
 	undeploy-rssbridge \
 	undeploy-swarmpit \
@@ -116,6 +118,19 @@ deploy-openwebui:
 .PHONY: undeploy-openwebui
 undeploy-openwebui:
 	$(MAKE) -C openwebui undeploy
+
+
+#########################################################################################
+# otel
+#########################################################################################
+
+.PHONY: deploy-otel
+deploy-otel:
+	$(MAKE) -C otel deploy
+
+.PHONY: undeploy-otel
+undeploy-otel:
+	$(MAKE) -C otel undeploy
 
 
 #########################################################################################

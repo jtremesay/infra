@@ -12,6 +12,7 @@ services = {
     "mirrors": True,
     "nextcloud": True,
     "openwebui": True,
+    "otel": True,
     "portainer": True,
     "rssbridge": True,
     "swarmpit": True,
