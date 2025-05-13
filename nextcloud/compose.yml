@@ -13,7 +13,7 @@ services:
       - "nextcloud_postgres_password"
 
   redis:
-    image: "redis"
+    image: "valkey/valkey:alpine"
     command:
       - "redis-server"
       - "--save"
