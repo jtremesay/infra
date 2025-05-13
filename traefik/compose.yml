@@ -25,6 +25,11 @@ services:
       - "--certificatesresolvers.leresolver.acme.email=jonathan.tremesaygues@slaanesh.org"
       - "--certificatesresolvers.leresolver.acme.storage=/data/acme.json"
       - "--certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web"
+      # Telemetry
+      - "--metrics.otlp=true"
+      - "--metrics.otlp.http=true"
+      - "--metrics.otlp.http.endpoint=http://prometheus:9090/api/v1/otlp/v1/metrics"
+
     ports:
       - "80:80"
       - "443:443"
@@ -33,6 +38,7 @@ services:
       - "traefik_data:/data"
     networks:
       - "traefik_public"
+      - "otel_public"
     deploy:
       labels:
         - "traefik.enable=true"
@@ -47,6 +53,8 @@ services:
 networks:
   traefik_public:
     attachable: true
+    external: true
+  otel_public:
     external: true
 
 volumes:
