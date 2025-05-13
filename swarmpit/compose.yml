@@ -33,7 +33,7 @@ services:
       - "default"
 
   influxdb:
-    image: "influxdb:1.8"
+    image: "influxdb:1.11-alpine"
     volumes:
       - "influx-data:/var/lib/influxdb"
     networks:
@@ -52,7 +52,6 @@ networks:
   default:
   traefik_public:
     external: true
-
 
 volumes:
   db-conf:
