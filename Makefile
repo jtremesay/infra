@@ -19,6 +19,7 @@ deploy: \
 	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-openwebui \
+	deploy-portainer \
 	deploy-rssbridge \
 	deploy-swarmpit \
 	deploy-traefik \
@@ -32,6 +33,7 @@ undeploy: \
 	undeploy-mirrors \
 	undeploy-nextcloud \
 	undeploy-openwebui \
+	undeploy-portainer \
 	undeploy-rssbridge \
 	undeploy-swarmpit \
 	undeploy-traefik \
@@ -114,6 +116,19 @@ deploy-openwebui:
 .PHONY: undeploy-openwebui
 undeploy-openwebui:
 	$(MAKE) -C openwebui undeploy
+
+
+#########################################################################################
+# portainer
+#########################################################################################
+
+.PHONY: deploy-portainer
+deploy-portainer:
+	$(MAKE) -C portainer deploy
+
+.PHONY: undeploy-portainer
+undeploy-portainer:
+	$(MAKE) -C portainer undeploy
 
 
 #########################################################################################
