@@ -9,7 +9,7 @@ all: deploy
 
 .PHONY: deploy
 deploy:
-	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker stack deploy --detach=true --compose-file compose.yml --prune ${STACK_NAME}
+	DOCKER_CONTEXT=${DOCKER_CONTEXT} docker stack deploy --detach=false --compose-file compose.yml --prune ${STACK_NAME}
 
 .PHONY: undeploy
 undeploy:
