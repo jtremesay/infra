@@ -7,12 +7,10 @@ from jinja2 import Template
 services = {
     "freshrss": True,
     "games": True,
-    "mail": False,
     "mattermost": True,
     "mirrors": True,
     "nextcloud": True,
     "openwebui": True,
-    "portainer": True,
     "rssbridge": True,
     "swarmpit": True,
     "traefik": True,
