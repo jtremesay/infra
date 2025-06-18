@@ -11,7 +11,7 @@ services:
       - "POSTGRES_PASSWORD=mattermost"
 
   mattermost:
-    image: mattermost/mattermost-team-edition:10.8
+    image: mattermost/mattermost-team-edition:10.9
     environment:
       # necessary Mattermost options/variables (see env.example)
       - "MM_SQLSETTINGS_DRIVERNAME=postgres"
