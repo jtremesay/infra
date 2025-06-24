@@ -1,0 +1,26 @@
+services:
+  nginx:
+    image: "nginx"
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/conf.d/default.conf
+    volumes:
+      - "/home/jtremesay/public_html:/usr/share/nginx/html"
+    networks:
+      - "traefik_public"
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.public_html.rule=(Host(`jtremesay.org`) || Host(`slaanesh.org`)) && PathPrefix(`/~jtremesay/`)"
+        - "traefik.http.routers.public_html.tls.certresolver=leresolver"
+        - "traefik.http.routers.public_html.middlewares=public_html-stripprefix"
+        - "traefik.http.middlewares.public_html-stripprefix.stripprefix.prefixes=/~jtremesay/"
+        - "traefik.http.services.public_html.loadbalancer.server.port=80"
+
+configs:
+  nginx_config:
+    file: "./nginx.conf"
+
+networks:
+  traefik_public:
+    external: true

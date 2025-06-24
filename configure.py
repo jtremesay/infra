@@ -11,6 +11,7 @@ services = {
     "mirrors": True,
     "nextcloud": True,
     "openwebui": True,
+    "public_html": True,
     "rssbridge": True,
     "swarmpit": True,
     "traefik": True,
