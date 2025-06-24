@@ -1,8 +1,10 @@
 services:
   nginx:
     image: "nginx"
+    configs:
+      - source: nginx_config_v1
+        target: /etc/nginx/conf.d/default.conf
     volumes:
-      - "/etc/dockerized/mirrors/nginx.conf:/etc/nginx/conf.d/default.conf"
       - "/srv/mirrors:/usr/share/nginx/html"
     networks:
       - "traefik_public"
@@ -13,6 +15,10 @@ services:
         - "traefik.http.services.mirrors.loadbalancer.server.port=80"
         - "traefik.http.routers.mirrors.tls.certresolver=leresolver"
 
+configs:
+  nginx_config_v1:
+    file: "./nginx.conf"
+    
 networks:
   traefik_public:
     external: true
