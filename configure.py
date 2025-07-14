@@ -10,7 +10,7 @@ services = {
     "mattermost": True,
     "mirrors": False,
     "nextcloud": True,
-    "openwebui": True,
+    "openwebui": False,
     "public_html": True,
     "rssbridge": False,
     "swarmpit": True,

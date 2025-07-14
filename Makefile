@@ -15,7 +15,6 @@ context:
 deploy: \
 	deploy-mattermost \
 	deploy-nextcloud \
-	deploy-openwebui \
 	deploy-public_html \
 	deploy-swarmpit \
 	deploy-traefik \
@@ -25,7 +24,6 @@ deploy: \
 undeploy: \
 	undeploy-mattermost \
 	undeploy-nextcloud \
-	undeploy-openwebui \
 	undeploy-public_html \
 	undeploy-swarmpit \
 	undeploy-traefik \
@@ -56,19 +54,6 @@ deploy-nextcloud:
 .PHONY: undeploy-nextcloud
 undeploy-nextcloud:
 	$(MAKE) -C nextcloud undeploy
-
-
-#########################################################################################
-# openwebui
-#########################################################################################
-
-.PHONY: deploy-openwebui
-deploy-openwebui:
-	$(MAKE) -C openwebui deploy
-
-.PHONY: undeploy-openwebui
-undeploy-openwebui:
-	$(MAKE) -C openwebui undeploy
 
 
 #########################################################################################
