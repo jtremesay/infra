@@ -17,8 +17,7 @@ deploy: \
 	deploy-nextcloud \
 	deploy-public_html \
 	deploy-swarmpit \
-	deploy-traefik \
-	deploy-vaultwarden
+	deploy-traefik
 
 .PHONY: undeploy
 undeploy: \
@@ -26,8 +25,7 @@ undeploy: \
 	undeploy-nextcloud \
 	undeploy-public_html \
 	undeploy-swarmpit \
-	undeploy-traefik \
-	undeploy-vaultwarden
+	undeploy-traefik
 
 
 #########################################################################################
@@ -93,17 +91,4 @@ deploy-traefik:
 .PHONY: undeploy-traefik
 undeploy-traefik:
 	$(MAKE) -C traefik undeploy
-
-
-#########################################################################################
-# vaultwarden
-#########################################################################################
-
-.PHONY: deploy-vaultwarden
-deploy-vaultwarden:
-	$(MAKE) -C vaultwarden deploy
-
-.PHONY: undeploy-vaultwarden
-undeploy-vaultwarden:
-	$(MAKE) -C vaultwarden undeploy
 

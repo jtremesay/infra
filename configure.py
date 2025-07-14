@@ -15,7 +15,7 @@ services = {
     "rssbridge": False,
     "swarmpit": True,
     "traefik": True,
-    "vaultwarden": True,
+    "vaultwarden": False,
 }
 
 template = Template(
