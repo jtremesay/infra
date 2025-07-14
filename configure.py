@@ -5,7 +5,7 @@ from pathlib import Path
 from jinja2 import Template
 
 services = {
-    "freshrss": True,
+    "freshrss": False,
     "games": True,
     "mattermost": True,
     "mirrors": True,

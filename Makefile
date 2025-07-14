@@ -13,7 +13,6 @@ context:
 
 .PHONY: deploy
 deploy: \
-	deploy-freshrss \
 	deploy-games \
 	deploy-mattermost \
 	deploy-mirrors \
@@ -27,7 +26,6 @@ deploy: \
 
 .PHONY: undeploy
 undeploy: \
-	undeploy-freshrss \
 	undeploy-games \
 	undeploy-mattermost \
 	undeploy-mirrors \
@@ -38,19 +36,6 @@ undeploy: \
 	undeploy-swarmpit \
 	undeploy-traefik \
 	undeploy-vaultwarden
-
-
-#########################################################################################
-# freshrss
-#########################################################################################
-
-.PHONY: deploy-freshrss
-deploy-freshrss:
-	$(MAKE) -C freshrss deploy
-
-.PHONY: undeploy-freshrss
-undeploy-freshrss:
-	$(MAKE) -C freshrss undeploy
 
 
 #########################################################################################
