@@ -13,7 +13,6 @@ context:
 
 .PHONY: deploy
 deploy: \
-	deploy-games \
 	deploy-mattermost \
 	deploy-mirrors \
 	deploy-nextcloud \
@@ -25,7 +24,6 @@ deploy: \
 
 .PHONY: undeploy
 undeploy: \
-	undeploy-games \
 	undeploy-mattermost \
 	undeploy-mirrors \
 	undeploy-nextcloud \
@@ -34,19 +32,6 @@ undeploy: \
 	undeploy-swarmpit \
 	undeploy-traefik \
 	undeploy-vaultwarden
-
-
-#########################################################################################
-# games
-#########################################################################################
-
-.PHONY: deploy-games
-deploy-games:
-	$(MAKE) -C games deploy
-
-.PHONY: undeploy-games
-undeploy-games:
-	$(MAKE) -C games undeploy
 
 
 #########################################################################################
