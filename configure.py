@@ -12,7 +12,7 @@ services = {
     "nextcloud": True,
     "openwebui": True,
     "public_html": True,
-    "rssbridge": True,
+    "rssbridge": False,
     "swarmpit": True,
     "traefik": True,
     "vaultwarden": True,

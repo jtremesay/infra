@@ -19,7 +19,6 @@ deploy: \
 	deploy-nextcloud \
 	deploy-openwebui \
 	deploy-public_html \
-	deploy-rssbridge \
 	deploy-swarmpit \
 	deploy-traefik \
 	deploy-vaultwarden
@@ -32,7 +31,6 @@ undeploy: \
 	undeploy-nextcloud \
 	undeploy-openwebui \
 	undeploy-public_html \
-	undeploy-rssbridge \
 	undeploy-swarmpit \
 	undeploy-traefik \
 	undeploy-vaultwarden
@@ -114,19 +112,6 @@ deploy-public_html:
 .PHONY: undeploy-public_html
 undeploy-public_html:
 	$(MAKE) -C public_html undeploy
-
-
-#########################################################################################
-# rssbridge
-#########################################################################################
-
-.PHONY: deploy-rssbridge
-deploy-rssbridge:
-	$(MAKE) -C rssbridge deploy
-
-.PHONY: undeploy-rssbridge
-undeploy-rssbridge:
-	$(MAKE) -C rssbridge undeploy
 
 
 #########################################################################################
