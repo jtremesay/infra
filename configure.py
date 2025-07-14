@@ -8,7 +8,7 @@ services = {
     "freshrss": False,
     "games": False,
     "mattermost": True,
-    "mirrors": True,
+    "mirrors": False,
     "nextcloud": True,
     "openwebui": True,
     "public_html": True,

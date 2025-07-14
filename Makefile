@@ -14,7 +14,6 @@ context:
 .PHONY: deploy
 deploy: \
 	deploy-mattermost \
-	deploy-mirrors \
 	deploy-nextcloud \
 	deploy-openwebui \
 	deploy-public_html \
@@ -25,7 +24,6 @@ deploy: \
 .PHONY: undeploy
 undeploy: \
 	undeploy-mattermost \
-	undeploy-mirrors \
 	undeploy-nextcloud \
 	undeploy-openwebui \
 	undeploy-public_html \
@@ -45,19 +43,6 @@ deploy-mattermost:
 .PHONY: undeploy-mattermost
 undeploy-mattermost:
 	$(MAKE) -C mattermost undeploy
-
-
-#########################################################################################
-# mirrors
-#########################################################################################
-
-.PHONY: deploy-mirrors
-deploy-mirrors:
-	$(MAKE) -C mirrors deploy
-
-.PHONY: undeploy-mirrors
-undeploy-mirrors:
-	$(MAKE) -C mirrors undeploy
 
 
 #########################################################################################
