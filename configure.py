@@ -7,7 +7,7 @@ from jinja2 import Template
 services = {
     "freshrss": False,
     "games": False,
-    "mattermost": True,
+    "mattermost": False,
     "mirrors": False,
     "nextcloud": False,
     "openwebui": False,

@@ -13,30 +13,15 @@ context:
 
 .PHONY: deploy
 deploy: \
-	deploy-mattermost \
 	deploy-public_html \
 	deploy-swarmpit \
 	deploy-traefik
 
 .PHONY: undeploy
 undeploy: \
-	undeploy-mattermost \
 	undeploy-public_html \
 	undeploy-swarmpit \
 	undeploy-traefik
-
-
-#########################################################################################
-# mattermost
-#########################################################################################
-
-.PHONY: deploy-mattermost
-deploy-mattermost:
-	$(MAKE) -C mattermost deploy
-
-.PHONY: undeploy-mattermost
-undeploy-mattermost:
-	$(MAKE) -C mattermost undeploy
 
 
 #########################################################################################
