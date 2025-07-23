@@ -14,7 +14,6 @@ context:
 .PHONY: deploy
 deploy: \
 	deploy-mattermost \
-	deploy-nextcloud \
 	deploy-public_html \
 	deploy-swarmpit \
 	deploy-traefik
@@ -22,7 +21,6 @@ deploy: \
 .PHONY: undeploy
 undeploy: \
 	undeploy-mattermost \
-	undeploy-nextcloud \
 	undeploy-public_html \
 	undeploy-swarmpit \
 	undeploy-traefik
@@ -39,19 +37,6 @@ deploy-mattermost:
 .PHONY: undeploy-mattermost
 undeploy-mattermost:
 	$(MAKE) -C mattermost undeploy
-
-
-#########################################################################################
-# nextcloud
-#########################################################################################
-
-.PHONY: deploy-nextcloud
-deploy-nextcloud:
-	$(MAKE) -C nextcloud deploy
-
-.PHONY: undeploy-nextcloud
-undeploy-nextcloud:
-	$(MAKE) -C nextcloud undeploy
 
 
 #########################################################################################

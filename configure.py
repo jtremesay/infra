@@ -9,7 +9,7 @@ services = {
     "games": False,
     "mattermost": True,
     "mirrors": False,
-    "nextcloud": True,
+    "nextcloud": False,
     "openwebui": False,
     "public_html": True,
     "rssbridge": False,
