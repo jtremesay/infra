@@ -51,7 +51,7 @@
     caddy.reverseProxies = {
       # Docker swarm services
       "jtremesay.org" = "http://localhost:8000";
-      "camille.jtremesay.org" = "http://localhost:8000";
+      "alix.jtremesay.org" = "http://localhost:8000";
       "traefik.jtremesay.org" = "http://localhost:8000";
 
       # Homelabs
