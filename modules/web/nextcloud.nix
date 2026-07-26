@@ -43,7 +43,7 @@ in
           services = {
             nextcloud = {
               enable = true;
-              package = pkgs.nextcloud33;
+              package = pkgs.nextcloud34;
               autoUpdateApps.enable = true;
               config = {
                 adminuser = "jtremesay";
@@ -53,7 +53,7 @@ in
               };
               database.createLocally = true;
               extraApps = {
-                inherit (pkgs.nextcloud33Packages.apps)
+                inherit (pkgs.nextcloud34Packages.apps)
                   calendar
                   contacts
                   mail
