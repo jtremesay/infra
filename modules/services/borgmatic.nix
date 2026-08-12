@@ -31,11 +31,14 @@
     };
   };
 
-  home-manager.users.root.programs.ssh.matchBlocks = {
-    sway = {
-      hostname = "u456662.your-storagebox.de";
-      user = "u456662";
-      port = 23;
+  home-manager.users.root.programs.ssh = {
+    enable = true;
+    settings = {
+      sway = {
+        hostname = "u456662.your-storagebox.de";
+        user = "u456662";
+        port = 23;
+      };
     };
   };
 }
