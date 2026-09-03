@@ -8,22 +8,28 @@ Notes: I have no fucking idea of what I'm doing. Use it at your own risk.
 
 ## Usage
 
-Enter in the development environment:
-
-```shell
-$ nix develop
-```
-
 Update the inputs:
 
 ```shell
 $ nix flake update
 ```
 
+Enter in the development environment:
+
+```shell
+$ nix develop
+```
+
+Run the checks:
+
+```shell
+$ nix flake check
+```
+
 Deploy the config
 
 ```shell
-$ colmena apply
+$ deploy
 ```
 
 ## Sops
