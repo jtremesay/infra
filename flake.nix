@@ -36,7 +36,7 @@
           age
           colmena.packages.${system}.colmena
           fish
-                    nixfmt
+          nixfmt
           sops
           ssh-to-age
         ];
@@ -70,7 +70,7 @@
 
         music = {
           deployment = {
-            #targetHost = "192.168.1.79";
+            targetHost = "192.168.1.79";
           };
           imports = commonModules ++ [ ./machines/music/configuration.nix ];
         };

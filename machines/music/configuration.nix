@@ -1,28 +1,75 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   lib,
   pkgs,
   ...
 }:
+let
+  sshPubKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGm5JRotZU5S8CIeY6UBRc6sVVw22lHHEHRHdwUXBJa jtremesay@nemo";
+in
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./network.nix
-    ../../modules/base.nix
-    ../../modules/boot.nix
-    ../../modules/dns/resolved.nix
-    ../../modules/laptop/lid.nix
-    ../../modules/network/tailscale.nix
-    ../../users
+  ];
+  networking.hostName = "music";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  networking.networkmanager.enable = true;
+  time.timeZone = "Europe/Paris";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    #font = "Lat2-Terminus16";
+    keyMap = "fr-bepo-latin9";
+    earlySetup = true;
+  };
+
+  users.groups = {
+    deployrs = {
+    };
+  };
+
+  users.users = {
+    root = {
+      openssh.authorizedKeys.keys = [
+        sshPubKey
+      ];
+    };
+
+    deployrs = {
+      isNormalUser = true;
+      group = config.users.groups.deployrs.name;
+      openssh.authorizedKeys.keys = [
+        sshPubKey
+      ];
+    };
+
+    jtremesay = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      packages = with pkgs; [
+      ];
+
+      openssh.authorizedKeys.keys = [
+        sshPubKey
+      ];
+    };
+  };
+
+  security.sudo.extraRules = [
+    {
+      groups = [ config.users.groups.deployrs.name ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
   ];
 
-  services.fwupd.enable = true;
+  services.openssh.enable = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
@@ -41,5 +88,5 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.11"; # Did you read the comment?
 }
