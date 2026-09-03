@@ -1,6 +1,9 @@
 {
   inputs = {
-    colmena.url = "github:zhaofengli/colmena";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +17,7 @@
   outputs =
     {
       self,
-      colmena,
+      deploy-rs,
       home-manager,
       nixpkgs,
       sops-nix,
@@ -34,7 +37,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           age
-          colmena.packages.${system}.colmena
+          deploy-rs.packages.${system}.deploy-rs
           fish
           nixfmt
           sops
@@ -45,34 +48,50 @@
         '';
       };
 
-      colmenaHive = colmena.lib.makeHive {
-        meta = {
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
-          };
+      nixosConfigurations = {
+        harvest = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ [ ./machines/harvest/configuration.nix ];
         };
 
-        hiraeth = {
-          deployment = {
-            #targetHost = "hiraeth.jtremesay.org";
-          };
-          imports = commonModules ++ [ ./machines/hiraeth/configuration.nix ];
+        hiraeth = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = commonModules ++ [ ./machines/hiraeth/configuration.nix ];
         };
 
+        music = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./machines/music/configuration.nix ];
+        };
+      };
+
+      deploy.nodes = {
         # harvest = {
-        #   deployment = {
-        #     #targetHost = "192.168.1.165";
+        #   hostname = "192.168.1.165";
+        #   sshUser = "root";
+        #   profiles.system = {
+        #     user = "root";
+        #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.harvest;
         #   };
-        #   imports = commonModules ++ [
-        #     ./machines/harvest/configuration.nix
-        #   ];
         # };
 
-        music = {
-          deployment = {
-            targetHost = "192.168.1.79";
+        hiraeth = {
+          hostname = "hiraeth";
+          #sshUser = "deployrs";
+          sshUser = "root";
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.hiraeth;
           };
-          imports = commonModules ++ [ ./machines/music/configuration.nix ];
+        };
+
+        music = {
+          hostname = "192.168.1.79";
+          sshUser = "deployrs";
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;
+          };
         };
       };
     };
