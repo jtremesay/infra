@@ -15,6 +15,7 @@
     ./hardware-configuration.nix
     ../../modules/base.nix
     ../../modules/boot.nix
+    ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
     ../../modules/laptop/lid.nix
     ../../modules/network/firewall.nix

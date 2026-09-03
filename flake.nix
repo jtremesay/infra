@@ -49,10 +49,10 @@
       };
 
       nixosConfigurations = {
-        harvest = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = commonModules ++ [ ./machines/harvest/configuration.nix ];
-        };
+        # harvest = nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   modules = commonModules ++ [ ./machines/harvest/configuration.nix ];
+        # };
 
         hiraeth = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -61,13 +61,15 @@
 
         music = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./machines/music/configuration.nix ];
+          modules = commonModules ++ [ ./machines/music/configuration.nix ];
         };
       };
 
       deploy.nodes = {
         # harvest = {
+        #   hostname = "harvest";
         #   hostname = "192.168.1.165";
+        #   sshUser = "deployrs";
         #   sshUser = "root";
         #   profiles.system = {
         #     user = "root";
@@ -77,17 +79,27 @@
 
         hiraeth = {
           hostname = "hiraeth";
-          #sshUser = "deployrs";
-          sshUser = "root";
+          #hostname = "hiraeth.jtremesay.org";
+          sshUser = "deployrs";
+          groups = [
+            "hiraeth"
+            "prod"
+          ];
           profiles.system = {
             user = "root";
             path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.hiraeth;
           };
+
         };
 
         music = {
-          hostname = "192.168.1.79";
+          hostname = "music";
+          #hostname = "192.168.1.79";
           sshUser = "deployrs";
+          groups = [
+            "music"
+            "dev"
+          ];
           profiles.system = {
             user = "root";
             path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;

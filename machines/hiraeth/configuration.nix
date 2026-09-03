@@ -14,6 +14,7 @@
     ./network.nix
     ../../modules/base.nix
     ../../modules/boot.nix
+    ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
     ../../modules/network/firewall.nix
     ../../modules/network/headscale.nix
