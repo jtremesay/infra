@@ -36,9 +36,7 @@
           age
           colmena.packages.${system}.colmena
           fish
-          nil
-          nixd
-          nixfmt
+                    nixfmt
           sops
           ssh-to-age
         ];
