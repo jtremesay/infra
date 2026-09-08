@@ -1,0 +1,59 @@
+{ config, ... }:
+{
+  sops.secrets = {
+    "wifi" = {
+      owner = "wpa_supplicant";
+      group = "wpa_supplicant";
+      mode = "0400";
+    };
+  };
+
+  networking = {
+    hostName = "harvest";
+    nat = {
+      enable = true;
+      enableIPv6 = true;
+      internalInterfaces = [
+        # NixOS containers
+        "ve-+"
+      ];
+      externalInterface = "wlo1";
+    };
+
+    wireless = {
+      enable = true;
+      secretsFile = config.sops.secrets."wifi".path;
+      networks = {
+        "SFR_C6B1".pskRaw = "ext:SFR_C6B1";
+      };
+    };
+
+    interfaces = {
+      wlo1 = {
+        ipv4.addresses = [
+          {
+            address = "192.168.1.51";
+            prefixLength = 24;
+          }
+        ];
+
+        ipv6.addresses = [
+          {
+            address = "2a02:8434:66ee:7001::51";
+            prefixLength = 64;
+          }
+        ];
+      };
+    };
+
+    defaultGateway = {
+      address = "192.168.1.1";
+      interface = "wlo1";
+    };
+
+    defaultGateway6 = {
+      address = "2a02:8434:66ee:7001:b69d:fdff:fe0a:c6b1";
+      interface = "wlo1";
+    };
+  };
+}

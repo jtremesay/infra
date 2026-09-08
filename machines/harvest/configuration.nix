@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   lib,
@@ -11,35 +7,18 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./network.nix
     ../../modules/base.nix
     ../../modules/boot.nix
     ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
     ../../modules/laptop/lid.nix
-    ../../modules/network/firewall.nix
-    ../../modules/network/networkmanager.nix
     ../../modules/network/tailscale.nix
-    #../../modules/services/borgmatic.nix
-    #../../modules/desktop/sway.nix
     ../../users
   ];
 
-  networking.hostName = "harvest";
-
-  services.caddy = {
-    enable = true;
-    configFile = pkgs.writeText "Caddyfile" ''
-      http://harvest.jtremesay.org
-
-      respond "Hello from harvest!"
-    '';
-  };
-
-  networking.firewall.allowedTCPPorts = [
-    80
-  ];
+  services.fwupd.enable = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
@@ -58,5 +37,5 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "26.11"; # Did you read the comment?
 }

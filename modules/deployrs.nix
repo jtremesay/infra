@@ -21,4 +21,6 @@
       ];
     }
   ];
+
+  nix.settings.trusted-users = [ config.users.groups.deployrs.name ];
 }
