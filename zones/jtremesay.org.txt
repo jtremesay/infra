@@ -1,0 +1,9 @@
+@                       10800  A      145.239.67.56
+@                       10800  AAAA   2001:41d0:303:3638::1
+@                       28800  MX     10 mx.mailo.com.
+@                       28800  TXT    "v=spf1 a include:mailo.com -all"
+mailo._domainkey        28800  TXT    "v=DKIM1; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCogimIxtj25vVoWcZxYHBmkWIH8r1pkr0njpB1ERV7hyMWLsBmu2VxYipdemgYr7ZE5z7ebfDyJ2MH4a4J3tff3qaaG7d55R5y8+4H9APOjLxN9PWFeEYOBdo7pDrcBZiMEM9x+9ElGt0MHKloYiK10M3MvN2Z3Fppw6GTzyXt0wIDAQAB;"
+_dmarc                  28800  TXT    "v=DMARC1; p=quarantine;"
+*                       10800  A      145.239.67.56
+*                       10800  AAAA   2001:41d0:303:3638::1
+

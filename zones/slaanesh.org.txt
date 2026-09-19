@@ -1,0 +1,12 @@
+@                       10800  AAAA   2a02:8434:66ee:7001::50
+@                       28800  MX     10 aspmx1.migadu.com.
+@                       28800  MX     20 aspmx1.migadu.com.
+@                       28800  TXT    "hosted-email-verify=gmnscop9"
+@                       28800  TXT    "v=spf1 include:spf.migadu.com -all"
+_dmarc                  28800  TXT    "v=DMARC1; p=quarantine;"
+key1._domainkey         28800  CNAME  key1.slaanesh.org._domainkey.migadu.com.
+key2._domainkey         28800  CNAME  key2.slaanesh.org._domainkey.migadu.com.
+key3._domainkey         28800  CNAME  key3.slaanesh.org._domainkey.migadu.com.
+*                       10800  AAAA   2a02:8434:66ee:7001::50
+@                       28800  TXT    "mistral-domain-verification=2b8abbdd6d7de326afd941f2e54581b101155df5"
+
