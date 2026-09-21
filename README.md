@@ -43,7 +43,7 @@ In your password manager, "Sops (age)" entry.
 Get the public key:
 
 ```shell
-$ ssh root@hiraeth.jtremesay.org cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
+$ ssh root@hiraeth.jtremesay.eu cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
 ```
 
 Add it to `.sops.yaml` then recrypt `secrets/default.yaml`:
@@ -61,7 +61,7 @@ $ sops edit secrets/default.yaml
 ## Tailscale
 
 ```shell
-tailscale up --login-server https://headscale.jtremesay.org
+tailscale up --login-server https://headscale.jtremesay.eu
 ```
 
 ## Borgmatic

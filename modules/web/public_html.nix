@@ -7,7 +7,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the public_html service";
-      default = "users.jtremesay.org";
+      default = "users.jtremesay.eu";
     };
   };
 

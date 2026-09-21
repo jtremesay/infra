@@ -12,12 +12,11 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the rssbridge service";
-      default = "rssbridge.jtremesay.org";
+      default = "rssbridge.jtremesay.eu";
     };
   };
 
   config = {
-
     containers.rssbridge = {
       autoStart = true;
       privateNetwork = true;

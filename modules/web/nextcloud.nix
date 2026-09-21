@@ -12,7 +12,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the nextcloud service";
-      default = "cloud.jtremesay.org";
+      default = "cloud.jtremesay.eu";
     };
   };
 
@@ -43,7 +43,7 @@ in
           services = {
             nextcloud = {
               enable = true;
-              package = pkgs.nextcloud34;
+              package = pkgs.nextcloud35;
               autoUpdateApps.enable = true;
               config = {
                 adminuser = "jtremesay";
@@ -53,7 +53,7 @@ in
               };
               database.createLocally = true;
               extraApps = {
-                inherit (pkgs.nextcloud34Packages.apps)
+                inherit (pkgs.nextcloud35Packages.apps)
                   calendar
                   contacts
                   mail

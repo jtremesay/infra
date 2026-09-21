@@ -12,7 +12,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the mattermost service";
-      default = "mattermost.jtremesay.org";
+      default = "mattermost.jtremesay.eu";
     };
   };
 

@@ -82,8 +82,8 @@
         };
 
         hiraeth = {
-          hostname = "hiraeth";
-          #hostname = "hiraeth.jtremesay.org";
+          #hostname = "hiraeth";
+          hostname = "hiraeth.jtremesay.eu";
           sshUser = "deployrs";
           #sshUser = "root";
           groups = [

@@ -31,7 +31,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.jtremesay.org`)"
+        - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.jtremesay.eu`) || Host(`traefik.jtremesay.org`)"
         - "traefik.http.routers.traefik_dashboard.service=api@internal"
         - "traefik.http.services.traefik_dashboard.loadbalancer.server.port=8000"
       placement:

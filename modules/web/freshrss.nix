@@ -12,7 +12,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the freshrss service";
-      default = "rss.jtremesay.org";
+      default = "rss.jtremesay.eu";
     };
   };
 

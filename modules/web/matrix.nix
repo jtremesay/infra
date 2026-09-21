@@ -16,7 +16,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the matrix service";
-      default = "matrix.jtremesay.org";
+      default = "matrix.jtremesay.eu";
     };
   };
 

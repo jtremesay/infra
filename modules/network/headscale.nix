@@ -12,7 +12,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the headscale service";
-      default = "headscale.jtremesay.org";
+      default = "headscale.jtremesay.eu";
     };
   };
 
@@ -35,7 +35,7 @@ in
             settings = {
               server_url = "https://${cfg.host}";
               dns = {
-                base_domain = "vpn.jtremesay.org";
+                base_domain = "vpn.jtremesay.eu";
                 override_local_dns = false;
                 name_servers = {
                   global = config.networking.nameservers;

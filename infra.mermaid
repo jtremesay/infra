@@ -45,8 +45,8 @@ graph TB
 
         subgraph mod_swarm["Docker Swarm"]
             Traefik["Traefik"]
-            JtremesayOrg["jtremesay.org"]
-            CamilleOrg["camille.jtremesay.org"]
+            JtremesayOrg["jtremesay.eu"]
+            CamilleOrg["camille.jtremesay.eu"]
             Traefik --> JtremesayOrg
             Traefik --> CamilleOrg
         end
@@ -58,16 +58,16 @@ graph TB
 
     Internet --> Caddy
 
-    Caddy -->|"rss.jtremesay.org"| FreshRSS
-    Caddy -->|"rssbridge.jtremesay.org"| RSSBridge
-    Caddy -->|"vault.jtremesay.org"| Vaultwarden
-    Caddy -->|"cloud.jtremesay.org"| Nextcloud
-    Caddy -->|"mattermost.jtremesay.org"| Mattermost
-    Caddy -->|"matrix.jtremesay.org"| Matrix
-    Caddy -->|"headscale.jtremesay.org"| Headscale
-    Caddy -->|"users.jtremesay.org"| PublicHTML
-    Caddy -->|"mirrors.jtremesay.org"| Mirrors
-    Caddy -->|"*.jtremesay.org (swarm)"| Traefik
+    Caddy -->|"rss.jtremesay.eu"| FreshRSS
+    Caddy -->|"rssbridge.jtremesay.eu"| RSSBridge
+    Caddy -->|"vault.jtremesay.eu"| Vaultwarden
+    Caddy -->|"cloud.jtremesay.eu"| Nextcloud
+    Caddy -->|"mattermost.jtremesay.eu"| Mattermost
+    Caddy -->|"matrix.jtremesay.eu"| Matrix
+    Caddy -->|"headscale.jtremesay.eu"| Headscale
+    Caddy -->|"users.jtremesay.eu"| PublicHTML
+    Caddy -->|"mirrors.jtremesay.eu"| Mirrors
+    Caddy -->|"*.jtremesay.eu (swarm)"| Traefik
 
     mod_web_freshrss -.->|"backup"| Borgmatic 
     mod_web_nextcloud -.->|"backup"| Borgmatic 

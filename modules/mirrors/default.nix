@@ -7,7 +7,7 @@ in
     host = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the mirrors service";
-      default = "mirrors.jtremesay.org";
+      default = "mirrors.jtremesay.eu";
     };
   };
 

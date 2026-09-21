@@ -10,24 +10,41 @@
       default = { };
       description = "Reverse proxy mappings: hostname -> backend_url";
     };
+
+    redirs = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      description = "Redirection mappings: hostname -> hostname";
+    };
   };
 
   config =
     let
       cfg = config.slaanesh.caddy;
+
       reverseProxyHosts = lib.mapAttrs (host: backend: {
         extraConfig = ''
           encode zstd gzip
           reverse_proxy ${backend}
         '';
       }) cfg.reverseProxies;
-      allHosts = reverseProxyHosts // {
-        ":80" = {
-          extraConfig = ''
-            redir / https://{host} permanent
-          '';
+
+      redirHosts = lib.mapAttrs (host: target: {
+        extraConfig = ''
+          redir https://${target}{uri} permanent
+        '';
+      }) cfg.redirs;
+
+      allHosts =
+        reverseProxyHosts
+        // redirHosts
+        // {
+          ":80" = {
+            extraConfig = ''
+              redir / https://{host} permanent
+            '';
+          };
         };
-      };
     in
     {
       sops.secrets = {
