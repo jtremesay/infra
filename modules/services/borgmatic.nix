@@ -33,6 +33,7 @@
 
   home-manager.users.root.programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     settings = {
       sway = {
         hostname = "u456662.your-storagebox.de";
