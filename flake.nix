@@ -38,14 +38,10 @@
         packages = with pkgs; [
           age
           deploy-rs.packages.${system}.deploy-rs
-          fish
           nixfmt
           sops
           ssh-to-age
         ];
-        shellHook = ''
-          exec ${pkgs.fish}/bin/fish
-        '';
       };
 
       nixosConfigurations = {
@@ -66,20 +62,20 @@
       };
 
       deploy.nodes = {
-        harvest = {
-          hostname = "harvest";
-          #hostname = "192.168.1.165";
-          sshUser = "deployrs";
-          #sshUser = "root";
-          groups = [
-            "harvest"
-            "staging"
-          ];
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.harvest;
-          };
-        };
+        # harvest = {
+        #   hostname = "harvest";
+        #   #hostname = "192.168.1.165";
+        #   sshUser = "deployrs";
+        #   #sshUser = "root";
+        #   groups = [
+        #     "harvest"
+        #     "staging"
+        #   ];
+        #   profiles.system = {
+        #     user = "root";
+        #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.harvest;
+        #   };
+        # };
 
         hiraeth = {
           #hostname = "hiraeth";
@@ -97,20 +93,20 @@
 
         };
 
-        music = {
-          hostname = "music";
-          #hostname = "192.168.1.79";
-          sshUser = "deployrs";
-          #sshUser = "root";
-          groups = [
-            "music"
-            "dev"
-          ];
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;
-          };
-        };
+        # music = {
+        #   hostname = "music";
+        #   #hostname = "192.168.1.79";
+        #   sshUser = "deployrs";
+        #   #sshUser = "root";
+        #   groups = [
+        #     "music"
+        #     "dev"
+        #   ];
+        #   profiles.system = {
+        #     user = "root";
+        #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;
+        #   };
+        # };
       };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
