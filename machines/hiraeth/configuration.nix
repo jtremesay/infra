@@ -13,9 +13,9 @@
     ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
     ../../modules/network/firewall.nix
-    #../../modules/network/headscale.nix
+    ../../modules/network/headscale.nix
     ../../modules/network/nat.nix
-    #../../modules/network/tailscale.nix
+    ../../modules/network/tailscale.nix
     ../../modules/mirrors
     ../../modules/services/borgmatic.nix
     ../../modules/services/docker.nix
@@ -42,7 +42,7 @@
     vaultwarden.localAddress = "192.168.100.12";
     nextcloud.localAddress = "192.168.100.13";
     mattermost.localAddress = "192.168.100.14";
-    #headscale.localAddress = "192.168.100.15";
+    headscale.localAddress = "192.168.100.15";
     #matrix.localAddress = "192.168.100.16";
 
     caddy.reverseProxies = {
