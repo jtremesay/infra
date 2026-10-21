@@ -93,20 +93,20 @@
 
         };
 
-        # music = {
-        #   hostname = "music";
-        #   #hostname = "192.168.1.79";
-        #   sshUser = "deployrs";
-        #   #sshUser = "root";
-        #   groups = [
-        #     "music"
-        #     "dev"
-        #   ];
-        #   profiles.system = {
-        #     user = "root";
-        #     path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;
-        #   };
-        # };
+        music = {
+          hostname = "music";
+          #hostname = "192.168.1.79";
+          sshUser = "deployrs";
+          #sshUser = "root";
+          groups = [
+            "music"
+            "dev"
+          ];
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.music;
+          };
+        };
       };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
