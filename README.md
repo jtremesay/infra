@@ -38,6 +38,24 @@ $ deploy
 
 In your password manager, "Sops (age)" entry.
 
+### Where the fuck should I put my key?
+
+In `~/.config/sops/age/keys.txt`.
+
+Format of the file:
+
+```
+# public key: <public key>
+<private key>
+```
+
+E.g:
+
+```
+# public key: age123456...
+AGE-SECRET-KEY-123456...
+```
+
 ### Generate server public key
 
 Get the public key:
