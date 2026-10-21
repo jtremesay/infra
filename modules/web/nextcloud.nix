@@ -17,23 +17,11 @@ in
   };
 
   config = {
-    sops.secrets = {
-      "nextcloud" = { };
-    };
-
-    containers.nextcloud = {
+        containers.nextcloud = {
       autoStart = true;
       privateNetwork = true;
       hostAddress = "192.168.100.1";
       localAddress = cfg.localAddress;
-
-      bindMounts = {
-        nextcloud = {
-          hostPath = config.sops.secrets."nextcloud".path;
-          mountPoint = "/run/secrets/nextcloud";
-          isReadOnly = true;
-        };
-      };
 
       config =
         { pkgs, lib, ... }:
@@ -46,9 +34,6 @@ in
               package = pkgs.nextcloud35;
               autoUpdateApps.enable = true;
               config = {
-                adminuser = "jtremesay";
-                adminpassFile = "/run/secrets/nextcloud";
-
                 dbtype = "pgsql";
               };
               database.createLocally = true;
