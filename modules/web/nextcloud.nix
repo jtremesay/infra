@@ -17,7 +17,7 @@ in
   };
 
   config = {
-        containers.nextcloud = {
+    containers.nextcloud = {
       autoStart = true;
       privateNetwork = true;
       hostAddress = "192.168.100.1";
@@ -76,7 +76,7 @@ in
         };
     };
 
-    slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.nextcloud.localAddress}:80";
+    #slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.nextcloud.localAddress}:80";
 
     services.borgmatic.settings.source_directories = [
       "/var/lib/nixos-containers/nextcloud/var/lib/nextcloud"
