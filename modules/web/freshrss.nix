@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  nixpkgs-master,
+  ...
+}:
 let
   cfg = config.slaanesh.freshrss;
 in
@@ -35,10 +40,23 @@ in
         };
       };
 
+      specialArgs = { inherit nixpkgs-master; };
+
       config =
         { pkgs, lib, ... }:
         {
           imports = [ ../dns/resolved.nix ];
+
+          nixpkgs.overlays = [
+            (final: prev: {
+              inherit (nixpkgs-master.legacyPackages.${prev.system})
+                php
+                php83
+                php84
+                php85
+                ;
+            })
+          ];
 
           systemd = {
             timers.freshrss-actualize = {
