@@ -71,6 +71,6 @@ in
         };
     };
 
-    #slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.rssbridge.localAddress}:80";
+    slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.rssbridge.localAddress}:80";
   };
 }

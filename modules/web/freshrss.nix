@@ -110,7 +110,7 @@ in
         };
     };
 
-    #slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.freshrss.localAddress}:80";
+    slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.freshrss.localAddress}:80";
 
     services.borgmatic.settings.source_directories = [
       "/var/lib/nixos-containers/freshrss/var/lib/freshrss"

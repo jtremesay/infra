@@ -94,7 +94,7 @@ in
         };
     };
 
-    #slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.nextcloud.localAddress}:80";
+    slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.nextcloud.localAddress}:80";
 
     services.borgmatic.settings.source_directories = [
       "/var/lib/nixos-containers/nextcloud/var/lib/nextcloud"
