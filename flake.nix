@@ -9,7 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +20,6 @@
       deploy-rs,
       home-manager,
       nixpkgs,
-      nixpkgs-master,
       sops-nix,
     }:
     let
@@ -49,19 +47,16 @@
       nixosConfigurations = {
         harvest = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs-master; };
           modules = commonModules ++ [ ./machines/harvest/configuration.nix ];
         };
 
         hiraeth = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs-master; };
           modules = commonModules ++ [ ./machines/hiraeth/configuration.nix ];
         };
 
         music = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit nixpkgs-master; };
           modules = commonModules ++ [ ./machines/music/configuration.nix ];
         };
       };

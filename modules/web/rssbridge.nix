@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  nixpkgs-master,
   ...
 }:
 let
@@ -28,23 +27,10 @@ in
       hostAddress = "192.168.100.1";
       localAddress = cfg.localAddress;
 
-      specialArgs = { inherit nixpkgs-master; };
-
       config =
         { pkgs, lib, ... }:
         {
           imports = [ ../dns/resolved.nix ];
-
-          nixpkgs.overlays = [
-            (final: prev: {
-              inherit (nixpkgs-master.legacyPackages.${prev.system})
-                php
-                php83
-                php84
-                php85
-                ;
-            })
-          ];
 
           services.rss-bridge = {
             enable = true;
