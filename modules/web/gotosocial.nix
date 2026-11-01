@@ -30,12 +30,11 @@ in
 
           services = {
             gotosocial = {
-              enable = True;
-              setupPostgresqlDB = True;
+              enable = true;
               settings = {
                 host = cfg.host;
                 protocol = "https";
-                bindAddress = "0.0.0.0";
+                bind-address = "0.0.0.0";
                 port = 8080;
               };
             };
@@ -48,16 +47,14 @@ in
             ];
           };
 
-          system.stateVersion = "25.05";
+          system.stateVersion = "26.05";
         };
     };
 
     slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.gotosocial.localAddress}:8080";
 
     services.borgmatic.settings.source_directories = [
-      #"/var/lib/nixos-containers/gotosocial/etc/gotosocial"
-      #"/var/lib/nixos-containers/gotosocial/var/lib/gotosocial"
-      #"/var/lib/nixos-containers/gotosocial/var/lib/postgresql"
+      "/var/lib/nixos-containers/gotosocial/var/lib/gotosocial"
     ];
   };
 }

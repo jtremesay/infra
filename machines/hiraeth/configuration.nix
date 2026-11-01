@@ -22,6 +22,7 @@
     ../../modules/services/github_ci.nix
     ../../modules/web/caddy.nix
     ../../modules/web/freshrss.nix
+    ../../modules/web/gotosocial.nix
     ../../modules/web/mattermost.nix
     #../../modules/web/matrix.nix
     ../../modules/web/nextcloud.nix
@@ -44,6 +45,8 @@
     mattermost.localAddress = "192.168.100.14";
     headscale.localAddress = "192.168.100.15";
     #matrix.localAddress = "192.168.100.16";
+    gotosocial.localAddress = "192.168.100.17";
+    gotosocial.host = "toot.jtremesay.eu";
 
     caddy.reverseProxies = {
       # Docker swarm services
@@ -70,6 +73,7 @@
       "mirrors.jtremesay.org" = "mirrors.jtremesay.eu";
       "rss.jtremesay.org" = "rss.jtremesay.eu";
       "rssbridge.jtremesay.org" = "rssbridge.jtremesay.eu";
+      "toot.jtremesay.org" = "toot.jtremesay.eu";
       "vault.jtremesay.org" = "vault.jtremesay.eu";
     };
   };
