@@ -5,7 +5,7 @@
     };
 
     systemd.tmpfiles.rules = [
-      "d ${config.containers.acme.bindMounts.certificates.hostPath} 0750 root root -"
+      "d /var/lib/shared-acme 0750 root root -"
     ];
 
     containers.acme = {
