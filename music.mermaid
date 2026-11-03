@@ -2,15 +2,15 @@ graph TB
     internet["🌐 Internet"]
 
     subgraph music["music (NixOS)"]
-        subgraph music_acme["container"]
+        subgraph music_acme["nixos-container"]
             music_acme_acme["ACME"]
         end
 
-        subgraph music_haproxy["container"]
+        subgraph music_haproxy["nixos-container"]
             music_haproxy_haproxy["HAProxy"]
         end
 
-        subgraph music_caddy["container"]
+        subgraph music_caddy["nixos-container"]
             music_caddy_caddy["Caddy"]
         end
 
