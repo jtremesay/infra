@@ -1,0 +1,24 @@
+graph TB
+    internet["🌐 Internet"]
+
+    subgraph music["music (NixOS)"]
+        subgraph music_acme["container"]
+            music_acme_acme["ACME"]
+        end
+
+        subgraph music_haproxy["container"]
+            music_haproxy_haproxy["HAProxy"]
+        end
+
+        subgraph music_caddy["container"]
+            music_caddy_caddy["Caddy"]
+        end
+
+        music_certificates["/var/lib/shared/acme"]
+    end
+
+    internet --> music_haproxy_haproxy
+
+    music_certificates -->|"/var/lib/acme (RW)"| music_haproxy
+    music_certificates -->|"/var/lib/acme (RO)"| music_acme
+    music_haproxy_haproxy --> music_caddy_caddy
