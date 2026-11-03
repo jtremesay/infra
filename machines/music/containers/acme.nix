@@ -5,7 +5,7 @@
     };
 
     systemd.tmpfiles.rules = [
-      "d /var/lib/shared-acme 0750 root root -"
+      "d /var/lib/shared/acme 0750 root root -"
     ];
 
     containers.acme = {
@@ -22,7 +22,7 @@
         };
 
         certificates = {
-          hostPath = "/var/lib/shared-acme";
+          hostPath = "/var/lib/shared/acme";
           mountPoint = "/var/lib/acme/";
           isReadOnly = false;
         };
