@@ -16,6 +16,7 @@
     ../../modules/laptop/lid.nix
     ../../modules/network/tailscale.nix
     ../../users
+    ./containers/acme.nix
   ];
 
   services.fwupd.enable = true;
