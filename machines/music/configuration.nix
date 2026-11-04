@@ -16,9 +16,9 @@
     ../../modules/laptop/lid.nix
     ../../modules/network/tailscale.nix
     ../../users
-    ./containers/acme.nix
-    ./containers/caddy.nix
-    ./containers/haproxy.nix
+    #./containers/acme.nix
+    #./containers/caddy.nix
+    #./containers/haproxy.nix
   ];
 
   services.fwupd.enable = true;
