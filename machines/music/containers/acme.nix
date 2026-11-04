@@ -12,7 +12,9 @@
       autoStart = true;
       privateNetwork = true;
       hostAddress = "192.168.100.1";
+      hostAddress6 = "fd00:100::1";
       localAddress = "192.168.100.2";
+      localAddress6 = "fd00:100::2";
 
       bindMounts = {
         ovh_acme = {
