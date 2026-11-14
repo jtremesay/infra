@@ -28,9 +28,9 @@ in
         {
           imports = [ ../dns/resolved.nix ];
 
-          environment.systemPackages = with pkgs; [
-            mmctl
-          ];
+          #environment.systemPackages = with pkgs; [
+          #  mmctl
+          #];
 
           services = {
             mattermost = {
