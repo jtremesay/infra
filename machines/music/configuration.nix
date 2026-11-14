@@ -16,10 +16,38 @@
     ../../modules/laptop/lid.nix
     ../../modules/network/tailscale.nix
     ../../users
-    #./containers/caddy.nix
+    ./containers/caddy.nix
   ];
 
   services.fwupd.enable = true;
+
+  slaanesh = {
+    caddy = {
+      localAddressLSB = 2;
+      wildcardDomains = [
+        "music.jtremesay.eu"
+      ];
+      virtualHosts = {
+        "music.jtremesay.eu" = {
+          extraConfig = ''
+            respond "Hello from Caddy!"
+          '';
+        };
+
+        "bla.music.jtremesay.eu" = {
+          extraConfig = ''
+            respond "bla from Caddy!"
+          '';
+        };
+
+        "prout.music.jtremesay.eu" = {
+          extraConfig = ''
+            respond "prout from Caddy!"
+          '';
+        };
+      };
+    };
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
