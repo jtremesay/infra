@@ -1,17 +1,30 @@
-{ config, lib, options, ... }: {
+{
+  config,
+  lib,
+  options,
+  ...
+}:
+{
   options.slaanesh.caddy = {
     localAddressLSB = lib.mkOption {
       type = lib.types.ints.u8;
     };
 
-    wildcardDomains = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
+    reverseProxies = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      description = "Reverse proxy mappings: hostname -> backend_url";
     };
 
     virtualHosts = lib.mkOption {
       type = options.services.caddy.virtualHosts.type;
       default = { };
+    };
+
+    wildcardDomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of wildcard domains for Caddy";
     };
   };
 
@@ -60,7 +73,14 @@
             }
           '';
           openFirewall = true;
-          virtualHosts = config.slaanesh.caddy.virtualHosts;
+          virtualHosts =
+            config.slaanesh.caddy.virtualHosts
+            // (lib.mapAttrs (host: backend: {
+              extraConfig = ''
+                encode zstd gzip
+                reverse_proxy ${backend}
+              '';
+            }) config.slaanesh.caddy.reverseProxies);
         };
 
         networking = {
