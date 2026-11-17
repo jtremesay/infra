@@ -17,6 +17,7 @@
     ../../modules/network/tailscale.nix
     ../../users
     ./containers/caddy.nix
+    ./containers/demo-whoami.nix
   ];
 
   services.fwupd.enable = true;
@@ -46,6 +47,10 @@
           '';
         };
       };
+    };
+
+    demo-whoami = {
+      localAddressLSB = 3;
     };
   };
 
