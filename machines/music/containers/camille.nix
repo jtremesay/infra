@@ -49,6 +49,30 @@
           ];
         };
 
+        # TODO
+        # services.openssh.enable = true;
+        # users.users.ci = {
+        #   isSystemUser = true;
+        #   group = "ci";
+        #   shell = pkgs.bash;
+        #   openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAA... ci@votre-ci" ];
+        # };
+        # security.sudo.extraRules = [
+        #   {
+        #     users = [ "ci" ];
+        #     commands = [
+        #       {
+        #         command = "/run/current-system/sw/bin/systemctl restart podman-camille-web.service";
+        #         options = [ "NOPASSWD" ];
+        #       }
+        #       {
+        #         command = "/run/current-system/sw/bin/systemctl status podman-camille-web.service";
+        #         options = [ "NOPASSWD" ];
+        #       }
+        #     ];
+        #   }
+        # ];
+
         systemd.services.camille-postgresql-credentials = {
           description = "Generate and apply Camille PostgreSQL credentials";
           requires = [ "postgresql-setup.service" ];
