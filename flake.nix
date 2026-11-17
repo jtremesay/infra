@@ -39,6 +39,7 @@
           age
           deploy-rs.packages.${system}.deploy-rs
           mermaid-cli
+          nixd
           nixfmt
           sops
           ssh-to-age
