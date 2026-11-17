@@ -18,6 +18,7 @@
     ../../users
     ./containers/caddy.nix
     ./containers/demo-whoami.nix
+    ./containers/camille.nix
   ];
 
   services.fwupd.enable = true;
@@ -51,6 +52,10 @@
 
     demo-whoami = {
       localAddressLSB = 3;
+    };
+
+    camille = {
+      localAddressLSB = 4;
     };
   };
 
