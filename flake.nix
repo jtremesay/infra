@@ -38,7 +38,7 @@
         packages = with pkgs; [
           age
           deploy-rs.packages.${system}.deploy-rs
-          mermaid-cli
+          d2
           nixd
           nixfmt
           sops

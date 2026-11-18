@@ -1,5 +1,5 @@
-all: infra.mermaid.svg music.mermaid.svg
+all: infra.svg music.svg
 
-%.mermaid.svg: %.mermaid
+%.svg: %.d2
 	@echo "Generating $@ from $<"
-	@mmdc -i $< -o $@
+	@d2 --layout=elk $< $@

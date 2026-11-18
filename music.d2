@@ -1,0 +1,23 @@
+direction: down
+
+internet: 🌐 Internet {
+  shape: cloud
+  style.fill: "#eeeeee"
+}
+
+music: music (NixOS) {
+  certificates: /var/lib/shared/acme {
+    shape: cylinder
+    style.fill: "#fff3cd"
+  }
+
+  acme: nixos-container { svc: ACME }
+  haproxy: nixos-container { svc: HAProxy }
+  caddy: nixos-container { svc: Caddy }
+
+  haproxy.svc -> caddy.svc
+  certificates -> haproxy: /var/lib/acme (RW)
+  certificates -> acme: /var/lib/acme (RO)
+}
+
+internet -> music.haproxy.svc

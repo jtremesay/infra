@@ -1,0 +1,87 @@
+direction: down
+
+Internet: 🌐 Internet {
+  shape: cloud
+  style.fill: "#eeeeee"
+}
+
+Sway: Hetzner Storage Box {
+  shape: cloud
+  style.fill: "#eeeeee"
+}
+
+hiraeth: hiraeth (NixOS) {
+
+  Caddy
+
+  mod_web_freshrss: container {
+    FreshRSS
+    FreshRSS_PG: PostgreSQL { shape: cylinder }
+    FreshRSS -> FreshRSS_PG
+  }
+
+  mod_web_rssbridge: container {
+    RSSBridge: RSS-Bridge
+  }
+
+  mod_web_vaultwarden: container {
+    Vaultwarden
+  }
+
+  mod_web_nextcloud: container {
+    Nextcloud
+    Nextcloud_PG: PostgreSQL { shape: cylinder }
+    Nextcloud -> Nextcloud_PG
+  }
+
+  mod_web_mattermost: container {
+    Mattermost
+    Mattermost_PG: PostgreSQL { shape: cylinder }
+    Mattermost -> Mattermost_PG
+  }
+
+  mod_web_matrix: container {
+    Matrix
+    Matrix_PG: PostgreSQL { shape: cylinder }
+    Matrix -> Matrix_PG
+  }
+
+  mod_net_headscale: container {
+    Headscale
+  }
+
+  PublicHTML: /srv/http/public_html
+  Mirrors: /srv/http/mirrors
+
+  mod_swarm: Docker Swarm {
+    Traefik
+    JtremesayOrg: jtremesay.eu
+    CamilleOrg: camille.jtremesay.eu
+    Traefik -> JtremesayOrg
+    Traefik -> CamilleOrg
+  }
+
+  Borgmatic
+}
+
+Internet -> hiraeth.Caddy
+
+hiraeth.Caddy -> hiraeth.mod_web_freshrss.FreshRSS: rss.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_web_rssbridge.RSSBridge: rssbridge.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_web_vaultwarden.Vaultwarden: vault.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_web_nextcloud.Nextcloud: cloud.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_web_mattermost.Mattermost: mattermost.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_web_matrix.Matrix: matrix.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_net_headscale.Headscale: headscale.jtremesay.eu
+hiraeth.Caddy -> hiraeth.PublicHTML: users.jtremesay.eu
+hiraeth.Caddy -> hiraeth.Mirrors: mirrors.jtremesay.eu
+hiraeth.Caddy -> hiraeth.mod_swarm.Traefik: *.jtremesay.eu (swarm)
+
+hiraeth.mod_web_freshrss -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+hiraeth.mod_web_nextcloud -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+hiraeth.mod_web_mattermost -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+hiraeth.mod_web_matrix -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+hiraeth.mod_web_vaultwarden -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+hiraeth.mod_swarm -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+
+hiraeth.Borgmatic -> Sway: backup { style.stroke-dash: 3 }
