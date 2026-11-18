@@ -5,19 +5,38 @@ internet: 🌐 Internet {
   style.fill: "#eeeeee"
 }
 
-music: music (NixOS) {
-  certificates: /var/lib/shared/acme {
-    shape: cylinder
-    style.fill: "#fff3cd"
-  }
-
-  acme: nixos-container { svc: ACME }
-  haproxy: nixos-container { svc: HAProxy }
-  caddy: nixos-container { svc: Caddy }
-
-  haproxy.svc -> caddy.svc
-  certificates -> haproxy: /var/lib/acme (RW)
-  certificates -> acme: /var/lib/acme (RO)
+ovh: OVH DNS {
+  shape: cloud
+  style.fill: "#eeeeee"
 }
 
-internet -> music.haproxy.svc
+music: music (NixOS) {
+  wlan0: wlan0 (192.168.1.50)
+
+  firewall: Firewall / NAT
+
+  caddy: nixos-container (192.168.100.2) {
+    svc: Caddy
+  }
+
+  demo_whoami: nixos-container (192.168.100.3) {
+    svc: demo-whoami (8080)
+  }
+
+  camille: nixos-container (192.168.100.4) {
+    web: OCI container (camille-web) {
+      svc: Camille (8000)
+    }
+    db: PostgreSQL {
+      shape: cylinder
+    }
+    web.svc -> db
+  }
+}
+
+internet -> music.wlan0
+music.wlan0 -> music.firewall
+music.firewall -> music.caddy.svc: ports 80/443 TCP, 443 UDP (NAT)
+music.caddy.svc -> ovh: DNS-01 certificates
+music.caddy.svc -> music.demo_whoami.svc: whoami.music.jtremesay.eu
+music.caddy.svc -> music.camille.web.svc: camille.music.jtremesay.eu
