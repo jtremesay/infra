@@ -26,6 +26,8 @@
   slaanesh = {
     alix = {
       localAddress = "192.168.100.10";
+      localAddress6 = "fd00:100::10";
+      sshPort = 2210;
     };
 
     caddy = {
