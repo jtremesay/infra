@@ -21,8 +21,8 @@ in
   };
 
   config = {
-    sops.secrets = {
-      "freshrss" = { };
+    sops.secrets."freshrss" = {
+      sopsFile = ../secrets/freshrss.yaml;
     };
 
     containers.freshrss = {
