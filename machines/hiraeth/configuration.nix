@@ -14,7 +14,30 @@
     ../../modules/dns/resolved.nix
     ../../users
     ./modules/borgmatic.nix
+    ./modules/caddy.nix
   ];
+
+  slaanesh = {
+    caddy = {
+      localAddress = "192.168.100.2";
+      localAddress6 = "fd00:100::2";
+
+      wildcardDomains = [
+        "jtremesay.eu"
+        # TODO: migrate domain from bookmyname to ovh
+        #"jtremesay.org"
+      ];
+
+      virtualHosts = {
+        # TODO: remove placeholder and use the website container image
+        "jtremesay.eu" = {
+          extraConfig = ''
+            respond "Hello from Caddy!"
+          '';
+        };
+      };
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

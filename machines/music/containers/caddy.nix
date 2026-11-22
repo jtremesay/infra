@@ -30,7 +30,9 @@
 
   config = {
     # https://doc.yunohost.org/fr/admin/get_started/providers/registrar/ovh/autodns/
-    sops.secrets."ovh_dns" = { };
+    sops.secrets."ovh_dns" = {
+      sopsFile = ../../../secrets/ovh_dns.yaml;
+    };
 
     containers.caddy = {
       autoStart = true;
