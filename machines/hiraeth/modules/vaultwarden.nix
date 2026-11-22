@@ -24,9 +24,9 @@ in
       localAddress = cfg.localAddress;
 
       config =
-        { pkgs, lib, ... }:
+        { lib, ... }:
         {
-          imports = [ ../dns/resolved.nix ];
+          imports = [ ../../../modules/dns/resolved.nix ];
 
           services.vaultwarden = {
             enable = true;

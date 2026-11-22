@@ -26,7 +26,7 @@ in
       config =
         { pkgs, lib, ... }:
         {
-          imports = [ ../dns/resolved.nix ];
+          imports = [ ../../../modules/dns/resolved.nix ];
 
           #environment.systemPackages = with pkgs; [
           #  mmctl

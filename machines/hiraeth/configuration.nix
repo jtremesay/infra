@@ -1,7 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
   ...
 }:
 {
@@ -16,8 +13,13 @@
     ../../users
     ./modules/borgmatic.nix
     ./modules/caddy.nix
+    ./modules/freshrss.nix
     ./modules/headscale.nix
     ./modules/mirrors
+    ./modules/mattermost.nix
+    ./modules/nextcloud.nix
+    ./modules/rssbridge.nix
+    ./modules/vaultwarden.nix
   ];
 
   slaanesh = {
@@ -55,12 +57,32 @@
       };
     };
 
+    freshrss = {
+      localAddress = "192.168.100.5";
+    };
+
     headscale = {
       localAddress = "192.168.100.3";
     };
 
+    mattermost = {
+      localAddress = "192.168.100.6";
+    };
+
+    nextcloud = {
+      localAddress = "192.168.100.7";
+    };
+
     mirrors = {
       localAddress = "192.168.100.4";
+    };
+
+    rssbridge = {
+      localAddress = "192.168.100.9";
+    };
+
+    vaultwarden = {
+      localAddress = "192.168.100.8";
     };
   };
 

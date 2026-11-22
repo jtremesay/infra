@@ -30,7 +30,7 @@ in
       config =
         { pkgs, lib, ... }:
         {
-          imports = [ ../dns/resolved.nix ];
+          imports = [ ../../../modules/dns/resolved.nix ];
 
           services = {
             nextcloud = {
