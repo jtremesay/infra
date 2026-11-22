@@ -36,7 +36,6 @@
 
       wildcardDomains = [
         "jtremesay.eu"
-        "jtremesay.org"
       ];
 
       virtualHosts = {
@@ -46,10 +45,12 @@
             respond "jtremesay.eu"
           '';
         };
-      };
 
-      redirects = {
-        "mirrors.jtremesay.org" = "https://mirrors.jtremesay.eu";
+        "*.jtremesay.org" = {
+          extraConfig = ''
+            redir https://{labels.2}.jtremesay.eu{uri} permanent
+          '';
+        };
       };
     };
 
