@@ -15,6 +15,7 @@
     ../../users
     ./modules/borgmatic.nix
     ./modules/caddy.nix
+    ./modules/headscale.nix
   ];
 
   slaanesh = {
@@ -36,6 +37,10 @@
           '';
         };
       };
+    };
+
+    headscale = {
+      localAddress = "192.168.100.3";
     };
   };
 

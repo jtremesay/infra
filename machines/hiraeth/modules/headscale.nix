@@ -8,12 +8,6 @@ in
       type = lib.types.str;
       description = "Local IP address for the headscale container";
     };
-
-    host = lib.mkOption {
-      type = lib.types.str;
-      description = "Hostname for the headscale service";
-      default = "headscale.jtremesay.eu";
-    };
   };
 
   config = {
@@ -24,16 +18,16 @@ in
       localAddress = cfg.localAddress;
 
       config =
-        { pkgs, lib, ... }:
+        { lib, ... }:
         {
-          imports = [ ../dns/resolved.nix ];
+          imports = [ ../../../modules/dns/resolved.nix ];
 
           services.headscale = {
             enable = true;
             address = "0.0.0.0";
 
             settings = {
-              server_url = "https://${cfg.host}";
+              server_url = "https://headscale.jtremesay.eu";
               dns = {
                 base_domain = "vpn.jtremesay.eu";
                 override_local_dns = false;
@@ -55,6 +49,7 @@ in
         };
     };
 
-    slaanesh.caddy.reverseProxies."${cfg.host}" = "${config.containers.headscale.localAddress}:8080";
+    slaanesh.caddy.reverseProxies."headscale.jtremesay.eu" =
+      "${config.containers.headscale.localAddress}:8080";
   };
 }
