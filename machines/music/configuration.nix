@@ -18,7 +18,6 @@
     ../../users
     ./containers/caddy.nix
     ./containers/demo-whoami.nix
-    ./containers/camille.nix
   ];
 
   services.fwupd.enable = true;
@@ -29,33 +28,10 @@
       wildcardDomains = [
         "music.jtremesay.eu"
       ];
-      virtualHosts = {
-        "music.jtremesay.eu" = {
-          extraConfig = ''
-            respond "Hello from Caddy!"
-          '';
-        };
-
-        "bla.music.jtremesay.eu" = {
-          extraConfig = ''
-            respond "bla from Caddy!"
-          '';
-        };
-
-        "prout.music.jtremesay.eu" = {
-          extraConfig = ''
-            respond "prout from Caddy!"
-          '';
-        };
-      };
     };
 
     demo-whoami = {
       localAddressLSB = 3;
-    };
-
-    camille = {
-      localAddressLSB = 4;
     };
   };
 

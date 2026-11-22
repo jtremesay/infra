@@ -11,6 +11,7 @@
     ../../modules/dns/resolved.nix
     ../../modules/network/tailscale.nix
     ../../users
+    ./modules/alix.nix
     ./modules/borgmatic.nix
     ./modules/caddy.nix
     ./modules/freshrss.nix
@@ -23,6 +24,10 @@
   ];
 
   slaanesh = {
+    alix = {
+      localAddress = "192.168.100.10";
+    };
+
     caddy = {
       localAddress = "192.168.100.2";
       localAddress6 = "fd00:100::2";

@@ -16,9 +16,7 @@
       autoStart = true;
       privateNetwork = true;
       hostAddress = "192.168.100.1";
-      hostAddress6 = "fd00:100::1";
       localAddress = "192.168.100.${toString config.slaanesh.demo-whoami.localAddressLSB}";
-      localAddress6 = "fd00:100::${lib.toHexString config.slaanesh.demo-whoami.localAddressLSB}";
 
       additionalCapabilities = [ "CAP_BPF" ];
 
@@ -44,7 +42,7 @@
       };
     };
 
-    slaanesh.caddy.reverseProxies."whoami.music.jtremesay.eu" =
+    slaanesh.caddy.reverseProxies."music.jtremesay.eu" =
       "${config.containers.demo-whoami.localAddress}:8080";
   };
 }

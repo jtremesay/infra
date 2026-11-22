@@ -1,35 +1,32 @@
 {
   config,
   lib,
-  options,
   ...
 }:
 {
-  options.slaanesh.camille = {
-    localAddressLSB = lib.mkOption {
-      type = lib.types.ints.u8;
+  options.slaanesh.alix = {
+    localAddress = lib.mkOption {
+      type = lib.types.str;
     };
   };
 
   config = {
-    sops.secrets."camille" = {
-      sopsFile = ../../../secrets/camille.music.yaml;
+    sops.secrets."alix" = {
+      sopsFile = ../secrets/alix.yaml;
     };
 
-    containers.camille = {
+    containers.alix = {
       autoStart = true;
       privateNetwork = true;
       hostAddress = "192.168.100.1";
-      hostAddress6 = "fd00:100::1";
-      localAddress = "192.168.100.${toString config.slaanesh.camille.localAddressLSB}";
-      localAddress6 = "fd00:100::${lib.toHexString config.slaanesh.camille.localAddressLSB}";
+      localAddress = config.slaanesh.alix.localAddress;
 
       additionalCapabilities = [ "CAP_BPF" ];
 
       bindMounts = {
         secrets = {
-          hostPath = config.sops.secrets."camille".path;
-          mountPoint = "/run/secrets/camille";
+          hostPath = config.sops.secrets."alix".path;
+          mountPoint = "/run/secrets/alix";
           isReadOnly = true;
         };
       };
@@ -39,7 +36,7 @@
 
         services.postgresql = {
           enable = true;
-          package = pkgs.postgresql_18;
+          package = pkgs.postgresql_19;
           ensureDatabases = [ "camille" ];
           ensureUsers = [
             {
@@ -74,7 +71,7 @@
         # ];
 
         systemd.services.camille-postgresql-credentials = {
-          description = "Generate and apply Camille PostgreSQL credentials";
+          description = "Generate and apply camille PostgreSQL credentials";
           requires = [ "postgresql-setup.service" ];
           after = [ "postgresql-setup.service" ];
           serviceConfig = {
@@ -96,7 +93,7 @@
 
             password="$(< "$passwordFile")"
             printf '%s\n%s\n' "$password" "$password" |
-              ${pkgs.postgresql_18}/bin/psql -X -v ON_ERROR_STOP=1 \
+              ${pkgs.postgresql_19}/bin/psql -X -v ON_ERROR_STOP=1 \
                 -d postgres --command='\password camille'
 
             printf 'DATABASE_URL=postgresql://camille:%s@localhost:5432/camille\n' \
@@ -118,30 +115,31 @@
               extraOptions = [ "--network=host" ];
               environment = {
                 MATTERMOST_BASE_URL = "https://mattermost.jtremesay.eu";
-                ALLOWED_HOSTS = "camille.music.jtremesay.eu";
+                ALLOWED_HOSTS = "alix.jtremesay.eu";
               };
               environmentFiles = [
-                "/run/secrets/camille"
+                "/run/secrets/alix"
                 "/var/lib/camille-db/oci.env"
               ];
             };
 
-            # "camille-mattermost" = {
-            #   pull = "newer";
-            #   image = "docker.io/killruana/camille:main";
-            #   cmd = [
-            #     "camille"
-            #     "mattermost"
-            #   ];
-            #   environment = {
-            #     MATTERMOST_BASE_URL = "https://mattermost.jtremesay.eu";
-            #     MATTERMOST_API_TOKEN_FILE = "/run/secrets/mattermost_api_token";
-            #     ALLOWED_HOSTS = "camille.music.jtremesay.eu";
-            #     DATABASE_URL = "postgresql://camille@localhost:5432/camille";
-            #     SALT_KEY_FILE = "/run/secrets/salt_key";
-            #     SECRET_KEY_FILE = "/run/secrets/secret_key";
-            #   };
-            # };
+            "camille-mattermost" = {
+              pull = "newer";
+              image = "docker.io/killruana/camille:v6";
+              cmd = [
+                "camille"
+                "mattermost"
+              ];
+              extraOptions = [ "--network=host" ];
+              environment = {
+                MATTERMOST_BASE_URL = "https://mattermost.jtremesay.eu";
+                ALLOWED_HOSTS = "alix.jtremesay.eu";
+              };
+              environmentFiles = [
+                "/run/secrets/alix"
+                "/var/lib/camille-db/oci.env"
+              ];
+            };
           };
         };
 
@@ -154,7 +152,6 @@
       };
     };
 
-    slaanesh.caddy.reverseProxies."camille.music.jtremesay.eu" =
-      "${config.containers.camille.localAddress}:8000";
+    slaanesh.caddy.reverseProxies."alix.jtremesay.eu" = "${config.containers.alix.localAddress}:8000";
   };
 }
