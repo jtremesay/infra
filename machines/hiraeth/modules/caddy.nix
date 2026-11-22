@@ -13,6 +13,12 @@
       type = lib.types.str;
     };
 
+    redirects = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = { };
+      description = "Redirect mappings: hostname -> target_url";
+    };
+
     reverseProxies = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = { };
@@ -70,11 +76,17 @@
             }
           '') config.slaanesh.caddy.wildcardDomains;
           globalConfig = ''
-            acme_dns ovh {
+            dns ovh {
               endpoint ovh-eu
               application_key {$OVH_APPLICATION_KEY}
               application_secret {$OVH_APPLICATION_SECRET}
               consumer_key {$OVH_CONSUMER_KEY}
+            }
+            cert_issuer acme {
+              dns
+            }
+            cert_issuer acme https://acme.zerossl.com/v2/DV90 {
+              dns
             }
           '';
           openFirewall = true;
@@ -84,7 +96,12 @@
               extraConfig = ''
                 reverse_proxy ${backend}
               '';
-            }) config.slaanesh.caddy.reverseProxies);
+            }) config.slaanesh.caddy.reverseProxies)
+            // (lib.mapAttrs (host: target: {
+              extraConfig = ''
+                redir ${target}{uri} permanent
+              '';
+            }) config.slaanesh.caddy.redirects);
         };
 
         networking = {

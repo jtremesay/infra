@@ -17,6 +17,7 @@
     ./modules/borgmatic.nix
     ./modules/caddy.nix
     ./modules/headscale.nix
+    ./modules/mirrors
   ];
 
   slaanesh = {
@@ -37,11 +38,29 @@
             respond "Hello from Caddy!"
           '';
         };
+
+        "mirrors.jtremesay.org" = {
+          extraConfig = ''
+            tls {
+              issuer acme {
+                disable_tlsalpn_challenge
+              }
+              issuer acme https://acme.zerossl.com/v2/DV90 {
+                disable_tlsalpn_challenge
+              }
+            }
+            redir https://mirrors.jtremesay.eu{uri} permanent
+          '';
+        };
       };
     };
 
     headscale = {
       localAddress = "192.168.100.3";
+    };
+
+    mirrors = {
+      localAddress = "192.168.100.4";
     };
   };
 
