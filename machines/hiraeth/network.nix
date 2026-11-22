@@ -6,10 +6,8 @@
     nat = {
       enable = true;
       enableIPv6 = true;
-      internalInterfaces = [
-        # NixOS containers
-        "ve-+"
-      ];
+      internalIPs = [ "192.168.100.0/24" ];
+      internalIPv6s = [ "fd00:100::/64" ];
       externalInterface = "eno1";
     };
 

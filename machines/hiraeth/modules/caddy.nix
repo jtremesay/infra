@@ -105,38 +105,52 @@
           443
         ];
       };
-      nat.forwardPorts = [
-        {
-          sourcePort = 80;
-          proto = "tcp";
-          destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpPort}";
-        }
-        {
-          sourcePort = 80;
-          proto = "tcp";
-          destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpPort}";
-        }
-        {
-          sourcePort = 443;
-          proto = "tcp";
-          destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpsPort}";
-        }
-        {
-          sourcePort = 443;
-          proto = "tcp";
-          destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpsPort}";
-        }
-        {
-          sourcePort = 443;
-          proto = "udp";
-          destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpsPort}";
-        }
-        {
-          sourcePort = 443;
-          proto = "udp";
-          destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpsPort}";
-        }
-      ];
+      nat.forwardPorts =
+        map
+          (
+            forward:
+            forward
+            // {
+              loopbackIPs = map (addr: addr.address) (
+                if lib.hasPrefix "[" forward.destination then
+                  config.networking.interfaces.eno1.ipv6.addresses
+                else
+                  config.networking.interfaces.eno1.ipv4.addresses
+              );
+            }
+          )
+          [
+            {
+              sourcePort = 80;
+              proto = "tcp";
+              destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpPort}";
+            }
+            {
+              sourcePort = 80;
+              proto = "tcp";
+              destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpPort}";
+            }
+            {
+              sourcePort = 443;
+              proto = "tcp";
+              destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpsPort}";
+            }
+            {
+              sourcePort = 443;
+              proto = "tcp";
+              destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpsPort}";
+            }
+            {
+              sourcePort = 443;
+              proto = "udp";
+              destination = "${config.containers.caddy.localAddress}:${toString config.containers.caddy.config.services.caddy.httpsPort}";
+            }
+            {
+              sourcePort = 443;
+              proto = "udp";
+              destination = "[${config.containers.caddy.localAddress6}]:${toString config.containers.caddy.config.services.caddy.httpsPort}";
+            }
+          ];
     };
   };
 }
