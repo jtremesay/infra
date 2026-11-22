@@ -1,87 +1,129 @@
 direction: down
 
-Internet: 🌐 Internet {
+internet: 🌐 Internet {
   shape: cloud
   style.fill: "#eeeeee"
 }
 
-Sway: Hetzner Storage Box {
+m_sway: Sway (Hetzner Storage Box) {
   shape: cloud
   style.fill: "#eeeeee"
 }
 
-hiraeth: hiraeth (NixOS) {
-
-  Caddy
-
-  mod_web_freshrss: container {
-    FreshRSS
-    FreshRSS_PG: PostgreSQL { shape: cylinder }
-    FreshRSS -> FreshRSS_PG
+m_hiraeth: Hiraeth (NixOS) {
+  cn_caddy: Caddy (nspawn) {
+    s_caddy: Caddy {
+      shape: oval
+    }
   }
 
-  mod_web_rssbridge: container {
-    RSSBridge: RSS-Bridge
+  cn_alix: Alix (nspawn) {
+    s_pg: PostgreSQL {
+      shape: cylinder
+    }
+
+    podman: Podman {
+      co_alix_web: Camille Web (OCI) {
+        shape: parallelogram
+      }
+
+      co_alix_mattermost: Camille Mattermost (OCI) {
+        shape: parallelogram
+      }
+    }
   }
 
-  mod_web_vaultwarden: container {
-    Vaultwarden
+  cn_freshrs: Freshrs (nspawn) {
+    s_pg: PostgreSQL {
+      shape: cylinder
+    }
+
+    s_freshrs: Freshrs {
+      shape: oval
+    }
   }
 
-  mod_web_nextcloud: container {
-    Nextcloud
-    Nextcloud_PG: PostgreSQL { shape: cylinder }
-    Nextcloud -> Nextcloud_PG
+  cn_headscale: Headscale (nspawn) {
+    s_headscale: Headscale {
+      shape: oval
+    }
   }
 
-  mod_web_mattermost: container {
-    Mattermost
-    Mattermost_PG: PostgreSQL { shape: cylinder }
-    Mattermost -> Mattermost_PG
+  cn_mattermost: Mattermost (nspawn) {
+    s_mattermost: Mattermost {
+      shape: oval
+    }
+
+    s_pg: PostgreSQL {
+      shape: cylinder
+    }
   }
 
-  mod_web_matrix: container {
-    Matrix
-    Matrix_PG: PostgreSQL { shape: cylinder }
-    Matrix -> Matrix_PG
+  cn_mirrors: Mirrors (nspawn) {
+    s_caddy: Caddy {
+      shape: oval
+    }
+
+    d_archlinux: Arch Linux {
+      shape: package
+    }
   }
 
-  mod_net_headscale: container {
-    Headscale
+  cn_nextcloud: Nextcloud (nspawn) {
+    s_pg: PostgreSQL {
+      shape: cylinder
+    }
+
+    s_nextcloud: Nextcloud {
+      shape: oval
+    }
   }
 
-  PublicHTML: /srv/http/public_html
-  Mirrors: /srv/http/mirrors
-
-  mod_swarm: Docker Swarm {
-    Traefik
-    JtremesayOrg: jtremesay.eu
-    CamilleOrg: camille.jtremesay.eu
-    Traefik -> JtremesayOrg
-    Traefik -> CamilleOrg
+  cn_rssbridge: RSSBridge (nspawn) {
+    s_rssbridge: RSSBridge {
+      shape: oval
+    }
   }
 
-  Borgmatic
+  cn_vaultwarden: Vaultwarden (nspawn) {
+    s_vaultwarden: Vaultwarden {
+      shape: oval
+    }
+  }
+
+  s_borgmatic: Borgmatic {
+    shape: oval
+  }
 }
 
-Internet -> hiraeth.Caddy
+ovh: OVH DNS {
+  shape: cloud
+  style.fill: "#eeeeee"
+}
 
-hiraeth.Caddy -> hiraeth.mod_web_freshrss.FreshRSS: rss.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_web_rssbridge.RSSBridge: rssbridge.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_web_vaultwarden.Vaultwarden: vault.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_web_nextcloud.Nextcloud: cloud.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_web_mattermost.Mattermost: mattermost.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_web_matrix.Matrix: matrix.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_net_headscale.Headscale: headscale.jtremesay.eu
-hiraeth.Caddy -> hiraeth.PublicHTML: users.jtremesay.eu
-hiraeth.Caddy -> hiraeth.Mirrors: mirrors.jtremesay.eu
-hiraeth.Caddy -> hiraeth.mod_swarm.Traefik: *.jtremesay.eu (swarm)
+internet -> m_hiraeth.cn_caddy.s_caddy
+m_hiraeth.cn_caddy.s_caddy -> ovh: DNS-01 certificates
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_alix.podman.co_alix_web: alix.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_freshrs.s_freshrs: rss.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_headscale.s_headscale: headscale.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_mattermost.s_mattermost: mattermost.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_mirrors.s_caddy: mirrors.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_nextcloud.s_nextcloud: cloud.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_rssbridge.s_rssbridge: rss.jtremesay.eu
+m_hiraeth.cn_caddy.s_caddy -> m_hiraeth.cn_vaultwarden.s_vaultwarden: vault.jtremesay.eu
 
-hiraeth.mod_web_freshrss -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
-hiraeth.mod_web_nextcloud -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
-hiraeth.mod_web_mattermost -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
-hiraeth.mod_web_matrix -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
-hiraeth.mod_web_vaultwarden -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
-hiraeth.mod_swarm -> hiraeth.Borgmatic: backup { style.stroke-dash: 3 }
+m_hiraeth.cn_alix.podman.co_alix_web -> m_hiraeth.cn_alix.s_pg
+m_hiraeth.cn_alix.podman.co_alix_mattermost -> m_hiraeth.cn_alix.s_pg
+m_hiraeth.cn_alix.podman.co_alix_mattermost -> m_hiraeth.cn_mattermost.s_mattermost
 
-hiraeth.Borgmatic -> Sway: backup { style.stroke-dash: 3 }
+m_hiraeth.cn_freshrs.s_freshrs -> m_hiraeth.cn_freshrs.s_pg
+m_hiraeth.cn_mirrors.s_caddy -> m_hiraeth.cn_mirrors.d_archlinux
+m_hiraeth.cn_mattermost.s_mattermost -> m_hiraeth.cn_mattermost.s_pg
+m_hiraeth.cn_nextcloud.s_nextcloud -> m_hiraeth.cn_nextcloud.s_pg
+
+m_hiraeth.cn_freshrs -> m_hiraeth.s_borgmatic
+m_hiraeth.cn_mattermost -> m_hiraeth.s_borgmatic
+m_hiraeth.cn_nextcloud -> m_hiraeth.s_borgmatic
+m_hiraeth.cn_vaultwarden -> m_hiraeth.s_borgmatic
+
+m_hiraeth.s_borgmatic -> m_sway
