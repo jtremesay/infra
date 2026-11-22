@@ -13,6 +13,7 @@
     ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
     ../../users
+    ./modules/borgmatic.nix
   ];
 
   # This value determines the NixOS release from which the default

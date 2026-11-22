@@ -1,6 +1,8 @@
 { config, ... }:
 {
-  sops.secrets.borgmatic = { };
+  sops.secrets.borgmatic = {
+    sopsFile = ../secrets/borgmatic.yaml;
+  };
 
   services.borgmatic = {
     enable = true;
