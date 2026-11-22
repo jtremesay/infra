@@ -1,6 +1,18 @@
-{ config, ... }:
+{ ... }:
 {
   networking = {
+    hostName = "hiraeth";
+
+    nat = {
+      enable = true;
+      enableIPv6 = true;
+      internalInterfaces = [
+        # NixOS containers
+        "ve-+"
+      ];
+      externalInterface = "eno1";
+    };
+
     interfaces = {
       eno1 = {
         ipv4.addresses = [
