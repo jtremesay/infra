@@ -36,31 +36,20 @@
 
       wildcardDomains = [
         "jtremesay.eu"
-        # TODO: migrate domain from bookmyname to ovh
-        #"jtremesay.org"
+        "jtremesay.org"
       ];
 
       virtualHosts = {
         # TODO: remove placeholder and use the website container image
         "jtremesay.eu" = {
           extraConfig = ''
-            respond "Hello from Caddy!"
+            respond "jtremesay.eu"
           '';
         };
+      };
 
-        "mirrors.jtremesay.org" = {
-          extraConfig = ''
-            tls {
-              issuer acme {
-                disable_tlsalpn_challenge
-              }
-              issuer acme https://acme.zerossl.com/v2/DV90 {
-                disable_tlsalpn_challenge
-              }
-            }
-            redir https://mirrors.jtremesay.eu{uri} permanent
-          '';
-        };
+      redirects = {
+        "mirrors.jtremesay.org" = "https://mirrors.jtremesay.eu";
       };
     };
 
