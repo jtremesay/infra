@@ -76,17 +76,13 @@
             }
           '') config.slaanesh.caddy.wildcardDomains;
           globalConfig = ''
-            dns ovh {
+            tls_resolvers dns111.ovh.net ns111.ovh.net
+
+            acme_dns ovh {
               endpoint ovh-eu
               application_key {$OVH_APPLICATION_KEY}
               application_secret {$OVH_APPLICATION_SECRET}
               consumer_key {$OVH_CONSUMER_KEY}
-            }
-            cert_issuer acme {
-              dns
-            }
-            cert_issuer acme https://acme.zerossl.com/v2/DV90 {
-              dns
             }
           '';
           openFirewall = true;
