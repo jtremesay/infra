@@ -12,6 +12,7 @@
     ../../modules/boot.nix
     ../../modules/deployrs.nix
     ../../modules/dns/resolved.nix
+    ../../modules/network/tailscale.nix
     ../../users
     ./modules/borgmatic.nix
     ./modules/caddy.nix
